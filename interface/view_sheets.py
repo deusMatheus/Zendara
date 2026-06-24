@@ -3,7 +3,7 @@ import streamlit as st
 from classes.db_manager import db_manager as db
 
 st.title("Visualizador de fichas")
-list_of_properties = ["Nome", "Espécie","Vocação","Nível","HP máximo", "Hp atual","Força","Agilidade","Raciocínio","Espiritualidade","Movimento","Equipamentos","Armas","Armadura","Condição"]
+list_of_properties = ["Nome", "Espécie","Vocação","Pontos de Experiência","HP máximo", "Hp atual","Força","Agilidade","Raciocínio","Espiritualidade","Movimento","Equipamentos","Armas","Armadura","Condição"]
 
 characters_list = db().select_values("*",'character_sheets')
 character_names = []

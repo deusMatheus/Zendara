@@ -3,7 +3,7 @@ import streamlit as st
 from classes.db_manager import db_manager as db
 
 st.title("Criador de fichas")
-list_of_properties = ["Nome do personagem", "Espécie","Vocação","Nível","HP máximo", "Hp atual","Força","Agilidade","Raciocínio","Espiritualidade","Movimento","Equipamentos","Armas","Armadura"]
+list_of_properties = ["Nome do personagem", "Espécie","Vocação","Pontos de Experiência","HP máximo", "Hp atual","Força","Agilidade","Raciocínio","Espiritualidade","Movimento","Equipamentos","Armas","Armadura"]
 list_of_inputs = []
 
 with st.form("form_char_sheet_creation"):
