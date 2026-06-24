@@ -1,3 +1,32 @@
+#####################################################################################################################
+#                   Fichas de Zendara                   
+# Versão 0.1.1
+#
+# Atualmente:
+#
+#   - Permite criar fichas simples e visualizá-las, mas alguns campos de texto da criação de ficha
+#       devem ser movidos para a sessão de visualização, como descrito na sessão abaixo. 
+# 
+# Para modificar: 
+#
+#   - Tirar do preenchimento na criação da ficha XP, HP atual, Equipamentos, Armas e Armaduras
+#
+#   - Colocar Adicionar XP, Modificar HP atual, Adicionar Equipamentos, Adicionar Armas e
+#       Adicionar Armaduras no Visualizador de Fichas.
+#
+#   - Os itens acima serão setados, inicialmente, com: 0XP, HP atual = função get_total_xp() no
+#       set inicial durante a criação da ficha, Equipamentos = Armas = Armaduras = 'empty'.
+#   
+# Bugs conhecidos: 
+#
+#   - Não há bugs conhecidos até o momento.
+#
+# Bugs resolvidos: 
+#
+#   - Não há bugs resolvidos até o momento.
+#
+#####################################################################################################################
+
 import streamlit as st
 #import tailwind as tw
 from classes.db_manager import db_manager as db
