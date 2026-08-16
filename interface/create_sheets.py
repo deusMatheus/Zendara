@@ -3,7 +3,7 @@ import streamlit as st
 from classes.db_manager import db_manager as db
 
 st.title("Criador de fichas")
-list_of_properties = ["Nome do personagem", "Espécie","Vocação","Pontos de Experiência","HP máximo", "Hp atual","Força","Agilidade","Raciocínio","Espiritualidade","Movimento","Equipamentos","Armas","Armadura"]
+list_of_properties = ["Nome do personagem", "Espécie","Vocação","Força","Agilidade","Raciocínio","Espiritualidade","Movimento"]
 list_of_inputs = []
 
 with st.form("form_char_sheet_creation"):
@@ -14,7 +14,7 @@ with st.form("form_char_sheet_creation"):
 
     if(create_sheet_button):
         try:
-            db().insert_values('character_sheets',[f'("{list_of_inputs[0]}","{list_of_inputs[1]}","{list_of_inputs[2]}","{list_of_inputs[3]}","{list_of_inputs[4]}","{list_of_inputs[5]}","{list_of_inputs[6]}","{list_of_inputs[7]}","{list_of_inputs[8]}","{list_of_inputs[9]}","{list_of_inputs[10]}","{list_of_inputs[11]}","{list_of_inputs[12]}","{list_of_inputs[13]}","none")'])
+            db().insert_values('character_sheets',[f'("{list_of_inputs[0]}","{list_of_inputs[1]}","{list_of_inputs[2]}",0,20,"20","{list_of_inputs[3]}","{list_of_inputs[4]}","{list_of_inputs[5]}","{list_of_inputs[6]}","{list_of_inputs[7]}","empty","empty","empty","none","Classe,Ancestralidade")'])
             st.warning('Sucesso na criação da ficha! Aguarde...')
             time.sleep(3)
 #        st.switch_page('public_page.py')

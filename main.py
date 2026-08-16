@@ -1,6 +1,6 @@
 #####################################################################################################################
 #                   Fichas de Zendara                   
-# Versão 0.1.1
+# Versão 0.1.2
 #
 # Atualmente:
 #
@@ -19,11 +19,13 @@
 #   
 # Bugs conhecidos: 
 #
-#   - Não há bugs conhecidos até o momento.
+#   - Não há bugs conhecidos no momento.
 #
 # Bugs resolvidos: 
 #
-#   - Não há bugs resolvidos até o momento.
+#   - Ao selecionar visualizador de fichas (view_sheets.py), estava dobrando a quantidade de fichas na variavel
+#       characters_list sempre que a página era acessada. Pegar esses dados do db foi colocado em main.py,
+#       o que chama apenas uma única vez e é armazenado em st.session.
 #
 #####################################################################################################################
 
@@ -40,6 +42,9 @@ list_of_properties = ["Nome", "Espécie","Vocação","Nível","HP máximo", "Hp 
 #    css = file.read()
 #st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
+if 'characters_list' not in st.session_state:
+    st.session_state['characters_list'] = db().select_values("*",'character_sheets')
+
 pages = [
     st.Page('interface/public_page.py', title='Página inicial'),
     st.Page('interface/create_sheets.py', title='Criador de Fichas'),
@@ -48,25 +53,4 @@ pages = [
 pg = st.navigation(pages)
 pg.run()
 
-#table_name = st.text_input('Table Name')
-#table_value = st.text_input('Table Value')
-#
-#button = st.button('Press me!')
-#
-#if(button):
-#    db().create_table(f"{table_name}",(f"{table_value}",""))
 
-#characters_list = db().select_values("*",'character_sheets')
-##print(teste[1])
-##st.write(teste[0])
-#
-##for i in range(len(list_of_properties)):
-##    st.write(f'{list_of_properties[i]}: {teste[0][i]}')
-#if not characters_list:
-#    st.write('Não há fichas cadastradas.')
-#
-#else:
-#    for character in characters_list:
-#        st.divider()
-#        for i in range(len(list_of_properties)):
-#            st.write(f'{list_of_properties[i]}: {character[i]}')
