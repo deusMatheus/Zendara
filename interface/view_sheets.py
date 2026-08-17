@@ -24,15 +24,28 @@ else:
     elif(character_selected in character_names):
         character_index = character_names.index(character_selected)
         for j in range(len(list_of_properties)):
+            if(j == 0):
+                abilities_by_character = db().list_abilities_by_character(characters_list[character_index][j])
             st.write(f'{list_of_properties[j]}: {characters_list[character_index][j]}')
         skill_categories = characters_list[character_index][-1].split(",")
 
+        list_of_tabs = []
+        for ability in abilities_by_character:
+            if(ability['categoria'] not in list_of_tabs):
+                list_of_tabs.append(ability['categoria'])
+
         st.title('Habilidades')
 
-        tabs = st.tabs(skill_categories)
-        for i in range(len(skill_categories)):
+        tabs = st.tabs(list_of_tabs)
+        for i in range(len(tabs)):
             with tabs[i]:
-                st.write(f'Skill de {skill_categories[i]}')
+                for ability in abilities_by_character:
+                    if list_of_tabs[i] == ability['categoria']:
+                        st.write(ability['habilidade']['nome'])
+                        st.write(ability['habilidade']['desc'])
+                        st.divider()
+
+#        st.write(abilities_by_character)
 
     else:
         st.write('Ocorreu um problema, contate o administrador do sistema')

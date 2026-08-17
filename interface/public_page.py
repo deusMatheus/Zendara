@@ -1,9 +1,10 @@
 import streamlit as st
 
-st.title("Fichas de Zendara V 0.1")
+st.title("Fichas de Zendara V 0.1.3")
 st.write('O que deseja?')
 
-create_sheets = st.button('Criar Fichas')
+#create_sheets = st.button('Criar Fichas')
+create_sheets = ''
 view_sheets = st.button('Visualizar Fichas')
 
 if(create_sheets):
