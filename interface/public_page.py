@@ -1,10 +1,12 @@
 import streamlit as st
 
-st.title("Fichas de Zendara V 0.1.3")
+st.session_state['register_ability'] = False
+
+st.title(f"Fichas de Zendara {st.session_state['version']}")
 st.write('O que deseja?')
 
-#create_sheets = st.button('Criar Fichas')
-create_sheets = ''
+create_sheets = st.button('Criar Fichas')
+#create_sheets = ''
 view_sheets = st.button('Visualizar Fichas')
 
 if(create_sheets):

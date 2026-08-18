@@ -1,25 +1,19 @@
 #####################################################################################################################
 #                   Fichas de Zendara                   
-# Versão 0.1.3
+# Versão 0.1.4
 #
 # Atualmente:
 #
-#   - Permite visualizar fichas. No momento há 2 personagens cadastrados para comparar com diferentes
-#       habilidades e vocações.
-# 
+#   - Permite cadastrar e visualizar fichas. 
+#
+#   - Permite cadastrar e visualizar habilidades para cada personagem.  
+#
 # Para modificar: 
 #
-#   - Não permite criar fichas, foi retirado para apresentar para o Lucas. Acrescentar novamente na próxima atualização.
+#   - Ajustar o layout da ficha
 #
-#   - Verificar se será necessário mantes o ID das habilidades na tabela de character_sheets. 
-#
-#   - Tirar do preenchimento na criação da ficha XP, HP atual, Equipamentos, Armas e Armaduras
-#
-#   - Colocar Adicionar XP, Modificar HP atual, Adicionar Equipamentos, Adicionar Armas e
-#       Adicionar Armaduras no Visualizador de Fichas.
-#
-#   - Os itens acima serão setados, inicialmente, com: 0XP, HP atual = função get_total_xp() no
-#       set inicial durante a criação da ficha, Equipamentos = Armas = Armaduras = 'empty'.
+#   - Colocar Adicionar XP, Modificar HP atual, Adicionar Equipamentos (armas e armaduras serão subitems)
+#        no Visualizador de Fichas.
 #   
 # Bugs conhecidos: 
 #
@@ -46,6 +40,8 @@ from classes.db_manager import db_manager as db
 #    css = file.read()
 #st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
+st.session_state['version'] = 'V 0.1.4'
+
 if 'characters_list' not in st.session_state:
     st.session_state['characters_list'] = db().select_values("*",'character_sheets')
 
@@ -55,6 +51,8 @@ if 'abilities_categories_list' not in st.session_state:
 if 'abilities_list' not in st.session_state:
     st.session_state['abilities_list'] = db().select_values("*",'abilities')
 
+if 'register_ability' not in st.session_state:
+    st.session_state['register_ability'] = False
 
 #print(st.session_state['characters_list'])
 #print(st.session_state['abilities_categories_list'])
@@ -62,9 +60,11 @@ if 'abilities_list' not in st.session_state:
 
 pages = [
     st.Page('interface/public_page.py', title='Página inicial'),
-#    st.Page('interface/create_sheets.py', title='Criador de Fichas'),
+    st.Page('interface/create_sheets.py', title='Criador de Fichas'),
     st.Page('interface/view_sheets.py', title='Visualizador de Fichas'),
+    st.Page('interface/register_ability.py', title='Registrar Habilidade')
     ]
+
 pg = st.navigation(pages)
 pg.run()
 
