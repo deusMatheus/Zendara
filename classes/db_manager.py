@@ -110,7 +110,7 @@ class db_manager:
         self.connection.commit()
 
 # -------------------------------
-#db_manager().reset_all()
+# db_manager().reset_all()
 #db_manager().create_character('Bob','Ave','Químico','20','0','0','5','1','20')
 #db_manager().insert_values('abilities',[f'("3","5","Ability Name Test","Ability Description Test")'])
 # # -------------------------------

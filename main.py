@@ -12,8 +12,13 @@
 #
 #   - Ajustar o layout da ficha
 #
+#   - Permitir criação de novas categorias de habilidades 
+#
 #   - Colocar Adicionar XP, Modificar HP atual, Adicionar Equipamentos (armas e armaduras serão subitems)
-#        no Visualizador de Fichas.
+#       no Visualizador de Fichas.
+#   
+#   - Fazer com itens igual as habilidades, onde existe uma tabela com o ID do personagem à quem o item
+#       pertence. Separar em categorias como armas, armaduras, itens mundanos e mágicos.
 #   
 # Bugs conhecidos: 
 #
