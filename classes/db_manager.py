@@ -23,6 +23,7 @@ class db_manager:
         self.cursor.execute('DROP TABLE character_sheets')
         self.cursor.execute('DROP TABLE abilities_categories')
         self.cursor.execute('DROP TABLE abilities')
+        self.cursor.execute('DROP TABLE equipement')
         self.connection.commit()
 
     def select_values(self, columns_string, table_name):
@@ -34,9 +35,11 @@ class db_manager:
     def reset_all(self):
         self.delete_tables()
         self.create_table('users','(username, password, name, privilege)')
-        self.create_table('character_sheets','(character_name, character_species, character_job, character_xp, max_hp, current_hp, strength_score, agility_score, logic_score, spirituality_score, movement_speed, equipment_list, weapons, armor, condition)')
+        self.create_table('character_sheets','(character_name, character_species, character_job, character_xp, max_hp, current_hp, strength_score, agility_score, logic_score, spirituality_score, movement_speed, condition)')
+#        self.create_table('character_sheets','(character_name, character_species, character_job, character_xp, max_hp, current_hp, strength_score, agility_score, logic_score, spirituality_score, movement_speed, equipment_list, weapons, armor, condition)')
         self.create_table('abilities_categories',('(character_id, category_name)'))
-        self.create_table('abilities','(character_id, ability_category_id, ability_name, ability_description)')
+        self.create_table('abilities','(character_id, ability_category_id, ability_name, ability_type, ability_description)')
+        self.create_table('equipement','(character_id, equip_category, equip_name, equip_description)')
 
     def list_abilities_categories_by_character(self, characterName):
         character_id = self.cursor.execute(f'SELECT rowid FROM character_sheets WHERE character_name = "{characterName}"').fetchall()[0][0]
@@ -52,7 +55,7 @@ class db_manager:
 
     def list_abilities_by_character(self, characterName):
         character_id = self.get_character_id_by_name(characterName)
-        list_of_abilities_unformated = self.cursor.execute(f'SELECT ability_category_id, ability_name, ability_description FROM abilities WHERE character_id = "{character_id}"').fetchall()
+        list_of_abilities_unformated = self.cursor.execute(f'SELECT ability_category_id, ability_name, ability_description, ability_type FROM abilities WHERE character_id = "{character_id}"').fetchall()
         list_of_categories_ids = []
         list_of_categories_names = []
         for ability in list_of_abilities_unformated:
@@ -69,7 +72,8 @@ class db_manager:
                             'habilidade':
                             {
                                 'nome': f'{ability[1]}',
-                                'desc': f'{ability[2]}'
+                                'desc': f'{ability[2]}',
+                                'tipo': f'{ability[3]}'
                             }
                         }
                     list_of_abilities_formatted.append(ability_dict)
@@ -85,6 +89,20 @@ class db_manager:
 #            print (ability['habilidade']['desc'])
         return list_of_abilities_formatted
 
+    def list_items_by_character (self, characterName):
+        character_id = self.get_character_id_by_name(characterName)
+        list_of_items_unformatted = self.cursor.execute(f'SELECT equip_category, equip_name, equip_description FROM equipement WHERE character_id = "{character_id}"').fetchall()
+        list_of_items_formatted = []
+        for item in list_of_items_unformatted:
+            list_of_items_formatted.append({
+                'categoria': item[0],
+                'item':{
+                    'nome': item[1],
+                    'desc': item[2]
+                }
+            })
+        return list_of_items_formatted
+
     def get_ability_category_by_id (self, abilityCategoryId):
         return self.cursor.execute(f'SELECT category_name FROM abilities_categories WHERE rowid = {abilityCategoryId}').fetchall()[0][0]
 
@@ -95,15 +113,20 @@ class db_manager:
         return self.cursor.execute(f'SELECT rowid FROM character_sheets WHERE character_name = "{characterName}"').fetchall()[0][0]
 
     def create_character (self, characterName, characterSpecies, characterJob, maxHP, strengthScore, agilityScore, logicScore, spiritualityScore, movementSpeed):
-        self.insert_values('character_sheets',[f'("{characterName}","{characterSpecies}","{characterJob}", "0", "{maxHP}", "{maxHP}", "{strengthScore}","{agilityScore}","{logicScore}","{spiritualityScore}","{movementSpeed}","empty","empty","empty","none")'])
+        self.insert_values('character_sheets',[f'("{characterName}","{characterSpecies}","{characterJob}", "0", "{maxHP}", "{maxHP}", "{strengthScore}","{agilityScore}","{logicScore}","{spiritualityScore}","{movementSpeed}","none")'])
         character_id = self.get_character_id_by_name(characterName)
-        self.insert_values('abilities_categories',[f'("{character_id}","Habilidades de Vocação")'])
-        self.insert_values('abilities_categories',[f'("{character_id}","Habilidades de Espécie")'])
+        self.insert_values('abilities_categories',[f'("{character_id}","Conhecimentos de Vocação")'])
+        self.insert_values('abilities_categories',[f'("{character_id}","Conhecimentos de Espécie")'])
+        self.insert_values('abilities_categories',[f'("{character_id}","Conhecimentos de Equipamento")'])
 
-    def create_ability (self, abilityName, abilityDesc, abilityCateg, characterName):
+    def create_ability (self, abilityName, abilityDesc, abilityCateg, abilityType, characterName):
         character_id = self.get_character_id_by_name(characterName)
         ability_category_id = self.get_ability_category_id_by_name(abilityCateg)
-        self.insert_values('abilities',[f'("{character_id}","{ability_category_id}","{abilityName}","{abilityDesc}")'])
+        self.insert_values('abilities',[f'("{character_id}","{ability_category_id}","{abilityName}","{abilityType}","{abilityDesc}")'])
+
+    def create_item(self, itemName, itemDesc, itemCateg, characterName):
+        character_id = self.get_character_id_by_name(characterName)
+        self.insert_values('equipement',[f'("{character_id}","{itemCateg}","{itemName}","{itemDesc}")'])
 
     def delete_values(self,tableName, columnName, valueToDelete):
         self.cursor.execute(f'DELETE FROM {tableName} WHERE {columnName}={valueToDelete};')

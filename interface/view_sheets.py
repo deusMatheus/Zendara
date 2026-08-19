@@ -10,6 +10,7 @@ if 'register_form' not in st.session_state:
     st.session_state['register_form'] = False
 
 st.session_state['register_ability'] = False
+st.session_state['register_item'] = False
 
 #def registerAbility():
 #    abilityName = st.session_state['ability_name']
@@ -35,7 +36,7 @@ st.session_state['register_ability'] = False
 #    st.session_state['register_ability'] = False
 #
 st.title("Visualizador de fichas")
-list_of_properties = ["Nome", "Espécie","Vocação","Pontos de Experiência","HP máximo", "Hp atual","Força","Agilidade","Raciocínio","Espiritualidade","Movimento","Equipamentos","Armas","Armadura","Condição"]
+list_of_properties = ["Nome", "Espécie","Vocação","Pontos de Experiência","HP máximo", "Hp atual","Força","Agilidade","Raciocínio","Espiritualidade","Movimento"]
 
 #characters_list = db().select_values("*",'character_sheets')
 characters_list = st.session_state['characters_list']
@@ -55,95 +56,75 @@ else:
 
     elif(character_selected in character_names):
         character_index = character_names.index(character_selected)
+        st.subheader(characters_list[character_index][0])
+#        with st.container(height=90, key='Teste', border=False):
+        list_of_columns = st.columns(4, border=True)
+        list_of_columns[0].write(f'{list_of_properties[6]}: {characters_list[character_index][6]}')
+        list_of_columns[1].write(f'{list_of_properties[7]}: {characters_list[character_index][7]}')
+        list_of_columns[2].write(f'{list_of_properties[8]}: {characters_list[character_index][8]}')
+        list_of_columns[3].write(f'{list_of_properties[9]}: {characters_list[character_index][9]}')
         for j in range(len(list_of_properties)):
-            st.write(f'{list_of_properties[j]}: {characters_list[character_index][j]}')
+            if((j<6 or j>9) and j!=0):
+                st.write(f'{list_of_properties[j]}: {characters_list[character_index][j]}')
 #        skill_categories = characters_list[character_index][-1].split(",")
 
-        st.title('Habilidades')
+        st.title('Equipamentos')
+
+        register_item = st.button('Cadastrar novo Equipamento')
+
+        if(register_item):
+            st.session_state['register_item'] = True
+            st.switch_page('interface/register_item.py')
+
+        items_by_character = db().list_items_by_character(characters_list[character_index][0])
+
+        list_of_items_tabs = ['Arma', 'Armadura', 'Mundano', 'Mágico']
+
+        items_tabs = st.tabs(list_of_items_tabs)
+        for i in range(len(items_tabs)):
+            with items_tabs[i]:
+                if not items_by_character:
+                    st.write('Não há itens cadastrados para este personagem.')
+                else:
+                    for item in items_by_character:
+                        if(list_of_items_tabs[i] == item['categoria']):
+                            st.subheader(item['item']['nome'])
+                            st.write(item['item']['desc'])
+                            st.divider()
+
+        st.title('Conhecimentos')
 
         abilities_by_character = db().list_abilities_by_character(characters_list[character_index][0])
         abilities_categories_by_character = db().list_abilities_categories_by_character(characters_list[character_index][0])
         abilities_categories_by_character_formated = []
-
-#        print('TESTE 1\n')
-#        print(abilities_by_character)
-#        print('TESTE 2\n')
-#        print(abilities_categories_by_character)
 
         list_of_tabs = []
         for category in abilities_categories_by_character:
             list_of_tabs.append(category[0])
             abilities_categories_by_character_formated.append(category[0])
 
-        register_ability = st.button('Cadastrar nova habilidade')
+        register_ability = st.button('Cadastrar novo Conhecimento')
 
         st.session_state['character_name'] = characters_list[character_index][0]
         st.session_state['abilities_categories_by_character'] = abilities_categories_by_character_formated
         if(register_ability):
             st.session_state['register_ability'] = True
             st.switch_page('interface/register_ability.py')
-#            st.session_state['register_ability'] = True
-#            if(st.session_state['register_ability']):
-#    #            st.session_state['register_pressed'] = True
-#                if st.button('TESTE'):
-#                    print(hey!)
-#                with st.form('register_ability_form'):
-#                    print('yoooo')
-#                    st.session_state['char_name'] = characters_list[character_index][0]
-#                    ability_name = st.text_input('Nome da habilidade', placeholder='Nome da habilidade', key='ability_name')
-#                    ability_desc = st.text_input('Descrição da habilidade', placeholder='Descrição da habilidade', key='ability_desc')
-#                    ability_categ = st.selectbox('Selecione uma categoria', abilities_categories_by_character_formated, placeholder='Selecione uma categoria', index=None, key='ability_categ')
-#                    st.session_state['register_ability'] = True 
-#                    if st.form_submit_button(label='Registrar'):
-##                    if (register_button):
-#                        print('HE2Y!')
-#                        st.session_state['register_form'] = True
-#                        registerAbility()
-
-#            if(ability_name):
-#                st.write(ability_name)
-#            finish_register = st.button('Finalizar cadastro')
-
-#            if(finish_register):
-#                if(not ability_name or not ability_desc or ability_categ):
-#                    st.warning('EXISTEM CAMPOS EM BRANCO!', icon=':warning:')
-#                else:
-#                    st.write(ability_name)
-#                    st.write(ability_desc)
-#                    st.write(ability_categ)
-#                    st.session_state['register_pressed'] = False
-
-#        for ability in abilities_by_character:
-#            if(ability['categoria'] not in list_of_tabs):
-#                list_of_tabs.append(ability['categoria'])
 
         tabs = st.tabs(list_of_tabs)
         for i in range(len(tabs)):
             with tabs[i]:
                 if not abilities_by_character:
-                    st.write('Não há habilidade cadastrada para este personagem.')
+                    st.write('Não há conhecimentos cadastrados para este personagem.')
                 else:
                     for ability in abilities_by_character:
-#                        print('TESTE')
-#                        print(ability['habilidade'])
-#                        print(ability['categoria'])
                         if list_of_tabs[i] == ability['categoria']:
                             st.subheader(ability['habilidade']['nome'])
+                            st.write(f'_{ability['habilidade']['tipo']}_')
                             st.write(ability['habilidade']['desc'])
                             st.divider()
                         elif list_of_tabs[i] != ability['categoria'] and not ability['categoria']:
-                            st.write('Não há habilidade cadastrada nesta categoria.')
-
-#        st.write(abilities_by_character)
+                            st.write('Não há Conhecimento cadastrado nesta categoria.')
 
     else:
         st.write('Ocorreu um problema, contate o administrador do sistema')
-
-#    tabs = st.tabs(character_names)
-#    for i in range(len(tabs)):
-#        with tabs[i]:
-#            for j in range(len(list_of_properties)):
-#                st.write(f'{list_of_properties[j]}: {characters_list[i][j]}')
-#            skill_categories = characters_list[i][-1].split(",")
-#            for category in skill_categories:
-#                st.write(category)

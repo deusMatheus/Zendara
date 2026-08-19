@@ -1,12 +1,18 @@
 #####################################################################################################################
 #                   Fichas de Zendara                   
-# Versão 0.1.4
+# Versão 0.2.0
 #
 # Atualmente:
 #
 #   - Permite cadastrar e visualizar fichas. 
 #
 #   - Permite cadastrar e visualizar habilidades para cada personagem.  
+#
+#   - Permite cadastrar e visualizar itens para cada personagem.  
+#
+#   - Layout modificado, com atributos destacados na ficha.  
+#
+#   - Retiradas as colunas de equipamentos da tabela de personagenns.
 #
 # Para modificar: 
 #
@@ -16,9 +22,6 @@
 #
 #   - Colocar Adicionar XP, Modificar HP atual, Adicionar Equipamentos (armas e armaduras serão subitems)
 #       no Visualizador de Fichas.
-#   
-#   - Fazer com itens igual as habilidades, onde existe uma tabela com o ID do personagem à quem o item
-#       pertence. Separar em categorias como armas, armaduras, itens mundanos e mágicos.
 #   
 # Bugs conhecidos: 
 #
@@ -45,7 +48,7 @@ from classes.db_manager import db_manager as db
 #    css = file.read()
 #st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
-st.session_state['version'] = 'V 0.1.4'
+st.session_state['version'] = 'V 0.2.0'
 
 if 'characters_list' not in st.session_state:
     st.session_state['characters_list'] = db().select_values("*",'character_sheets')
@@ -59,6 +62,9 @@ if 'abilities_list' not in st.session_state:
 if 'register_ability' not in st.session_state:
     st.session_state['register_ability'] = False
 
+if 'register_item' not in st.session_state:
+    st.session_state['register_item'] = False
+
 #print(st.session_state['characters_list'])
 #print(st.session_state['abilities_categories_list'])
 #print(st.session_state['abilities_list'])
@@ -67,7 +73,8 @@ pages = [
     st.Page('interface/public_page.py', title='Página inicial'),
     st.Page('interface/create_sheets.py', title='Criador de Fichas'),
     st.Page('interface/view_sheets.py', title='Visualizador de Fichas'),
-    st.Page('interface/register_ability.py', title='Registrar Habilidade')
+    st.Page('interface/register_ability.py', title='Registrar Habilidade', visibility='hidden'),
+    st.Page('interface/register_item.py', title='Registrar Item', visibility='hidden')
     ]
 
 pg = st.navigation(pages)
