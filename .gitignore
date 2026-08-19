@@ -1,4 +1,8 @@
 venv/
+node_modules/
+build/
+dist/
 package.json
+package-lock.json
 package copy.json
 comandos_para_buildar_em_exe.txt

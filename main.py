@@ -73,8 +73,8 @@ pages = [
     st.Page('interface/public_page.py', title='Página inicial'),
     st.Page('interface/create_sheets.py', title='Criador de Fichas'),
     st.Page('interface/view_sheets.py', title='Visualizador de Fichas'),
-    st.Page('interface/register_ability.py', title='Registrar Habilidade', visibility='hidden'),
-    st.Page('interface/register_item.py', title='Registrar Item', visibility='hidden')
+    st.Page('interface/register_ability.py', title='Registrar Habilidade'),
+    st.Page('interface/register_item.py', title='Registrar Item')
     ]
 
 pg = st.navigation(pages)
