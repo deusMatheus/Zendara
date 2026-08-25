@@ -57,14 +57,15 @@ else:
     elif(character_selected in character_names):
         character_index = character_names.index(character_selected)
         st.subheader(characters_list[character_index][0])
-#        with st.container(height=90, key='Teste', border=False):
+#        with st.container(height=135, key='Teste', border=False):
+        st.number_input(f'HP (Max {characters_list[character_index][4]})',0,value=int(characters_list[character_index][5]),width=int(135))
         list_of_columns = st.columns(4, border=True)
-        list_of_columns[0].write(f'{list_of_properties[6]}: {characters_list[character_index][6]}')
-        list_of_columns[1].write(f'{list_of_properties[7]}: {characters_list[character_index][7]}')
-        list_of_columns[2].write(f'{list_of_properties[8]}: {characters_list[character_index][8]}')
-        list_of_columns[3].write(f'{list_of_properties[9]}: {characters_list[character_index][9]}')
+        list_of_columns[0].number_input(f'{list_of_properties[6]}',0,value=int(characters_list[character_index][6]),width=int(135))
+        list_of_columns[1].number_input(f'{list_of_properties[7]}',0,value=int(characters_list[character_index][7]),width=int(135))
+        list_of_columns[2].number_input(f'{list_of_properties[8]}',0,value=int(characters_list[character_index][8]),width=int(135))
+        list_of_columns[3].number_input(f'{list_of_properties[9]}',0,value=int(characters_list[character_index][9]),width=int(135))
         for j in range(len(list_of_properties)):
-            if((j<6 or j>9) and j!=0):
+            if((j<6 or j>9) and j!=0 and j!=4 and j!=5):
                 st.write(f'{list_of_properties[j]}: {characters_list[character_index][j]}')
 #        skill_categories = characters_list[character_index][-1].split(",")
 

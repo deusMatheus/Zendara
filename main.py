@@ -6,9 +6,7 @@
 #
 #   - Permite cadastrar e visualizar fichas. 
 #
-#   - Permite cadastrar e visualizar habilidades para cada personagem.  
-#
-#   - Permite cadastrar e visualizar itens para cada personagem.  
+#   - Permite cadastrar e visualizar itens e habilidades para cada personagem.  
 #
 #   - Layout modificado, com atributos destacados na ficha.  
 #
@@ -20,8 +18,9 @@
 #
 #   - Permitir criação de novas categorias de habilidades 
 #
-#   - Colocar Adicionar XP, Modificar HP atual, Adicionar Equipamentos (armas e armaduras serão subitems)
-#       no Visualizador de Fichas.
+#   - Permitir edição de itens e habilidades existentes
+#
+#   - Colocar Adicionar XP, Modificar HP atual e Modificar Atributos no Visualizador de Fichas.
 #   
 # Bugs conhecidos: 
 #
@@ -64,6 +63,9 @@ if 'register_ability' not in st.session_state:
 
 if 'register_item' not in st.session_state:
     st.session_state['register_item'] = False
+
+if 'edit' not in st.session_state:
+    st.session_state['edit'] = False
 
 #print(st.session_state['characters_list'])
 #print(st.session_state['abilities_categories_list'])
