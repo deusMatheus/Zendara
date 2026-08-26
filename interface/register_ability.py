@@ -2,6 +2,9 @@ import streamlit as st
 from time import sleep
 from classes.db_manager import db_manager as db
 
+st.session_state['register_item'] = False
+st.session_state['edit_item'] = False
+
 def registerAbility(abilityName, abilityDesc, abilityCateg, abilityType, characterName):
     st.session_state['register_form'] = True
     if (abilityName != '' and abilityDesc != '' and abilityCateg != '' and st.session_state['register_form']):

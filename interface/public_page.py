@@ -1,6 +1,10 @@
 import streamlit as st
 
 st.session_state['register_ability'] = False
+st.session_state['edit_ability'] = False
+st.session_state['register_item'] = False
+st.session_state['edit_item'] = False
+
 
 st.title(f"Fichas de Zendara {st.session_state['version']}")
 st.write('O que deseja?')

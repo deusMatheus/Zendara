@@ -1,6 +1,6 @@
 #####################################################################################################################
 #                   Fichas de Zendara                   
-# Versão 0.2.0
+# Versão 0.3.0
 #
 # Atualmente:
 #
@@ -12,15 +12,21 @@
 #
 #   - Retiradas as colunas de equipamentos da tabela de personagenns.
 #
+#   - Permite editar atributos e HP dos personagens
+#
+#   - Permite editar itens dos personagens
+#
 # Para modificar: 
 #
 #   - Ajustar o layout da ficha
 #
 #   - Permitir criação de novas categorias de habilidades 
 #
-#   - Permitir edição de itens e habilidades existentes
+#   - Permitir edição de habilidades existentes
 #
-#   - Colocar Adicionar XP, Modificar HP atual e Modificar Atributos no Visualizador de Fichas.
+#   - Permitir alteração de XP e Movimento no Visualizador de Fichas.
+#
+#   - Colocar novas classes na pasta de Classes e realizar a comunicação com o DB por lá ao invés da pasta Interface.
 #   
 # Bugs conhecidos: 
 #
@@ -61,11 +67,32 @@ if 'abilities_list' not in st.session_state:
 if 'register_ability' not in st.session_state:
     st.session_state['register_ability'] = False
 
+if 'edit_ability' not in st.session_state:
+    st.session_state['edit_ability'] = False
+
 if 'register_item' not in st.session_state:
     st.session_state['register_item'] = False
 
-if 'edit' not in st.session_state:
-    st.session_state['edit'] = False
+if 'edit_item' not in st.session_state:
+    st.session_state['edit_item'] = False
+
+if 'disabled_button' not in st.session_state:
+    st.session_state['disabled_button'] = True
+
+if 'apply_changes' not in st.session_state:
+    st.session_state['apply_changes'] = False
+
+if 'items_by_character' not in st.session_state:
+    st.session_state['items_by_character'] = False
+
+if 'abilities_by_character' not in st.session_state:
+    st.session_state['abilities_by_character'] = False
+
+if 'items_by_character' not in st.session_state:
+    st.session_state['items_by_character'] = []
+
+if 'items_categories' not in st.session_state:
+    st.session_state['items_categories'] = ['Arma', 'Armadura', 'Mundano', 'Mágico']
 
 #print(st.session_state['characters_list'])
 #print(st.session_state['abilities_categories_list'])

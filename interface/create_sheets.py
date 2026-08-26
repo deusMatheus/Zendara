@@ -3,6 +3,10 @@ import streamlit as st
 from classes.db_manager import db_manager as db
 
 st.session_state['register_ability'] = False
+st.session_state['edit_ability'] = False
+st.session_state['register_item'] = False
+st.session_state['edit_item'] = False
+
 
 st.title("Criador de fichas")
 list_of_properties = ["Nome do personagem", "Espécie","Vocação","Força","Agilidade","Raciocínio","Espiritualidade","Movimento"]

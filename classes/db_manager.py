@@ -78,15 +78,6 @@ class db_manager:
                         }
                     list_of_abilities_formatted.append(ability_dict)
 
-###########        print(list_of_abilities_unformated)
-###########        print(list_of_categories_names)
-###########        print(list_of_categories_ids)
-###########        print(list_of_abilities_formatted)
-
-#        for ability in list_of_abilities_formatted:
-#            print (ability['categoria'])
-#            print (ability['habilidade']['nome'])
-#            print (ability['habilidade']['desc'])
         return list_of_abilities_formatted
 
     def list_items_by_character (self, characterName):
@@ -111,6 +102,26 @@ class db_manager:
 
     def get_character_id_by_name (self, characterName):
         return self.cursor.execute(f'SELECT rowid FROM character_sheets WHERE character_name = "{characterName}"').fetchall()[0][0]
+
+    def get_item_id_by_name_and_charid (self, itemName, characterId):
+        return self.cursor.execute(f'SELECT rowid FROM equipement WHERE character_id = "{characterId}" and equip_name = "{itemName}"').fetchall()[0][0]
+
+    def update_character_atributes (self, characterName, hpScore, strengthScore, agilityScore, logicScore, spiritualityScore, movementSpeed):
+        character_id = self.get_character_id_by_name(characterName)
+        max_hp = self.cursor.execute(f'SELECT max_hp FROM character_sheets WHERE rowid = {character_id}').fetchall()[0][0]
+        if(int(hpScore) > int(max_hp)):
+            self.cursor.execute(f'UPDATE character_sheets SET max_hp = "{hpScore}", current_hp="{hpScore}", strength_score = "{strengthScore}", agility_score = "{agilityScore}", logic_score = "{logicScore}", spirituality_score = "{spiritualityScore}", movement_speed = "{movementSpeed}" WHERE rowid = {character_id}')
+        else:
+            self.cursor.execute(f'UPDATE character_sheets SET current_hp="{hpScore}", strength_score = "{strengthScore}", agility_score = "{agilityScore}", logic_score = "{logicScore}", spirituality_score = "{spiritualityScore}", movement_speed = "{movementSpeed}" WHERE rowid = {character_id}')
+        self.connection.commit()
+        self.connection.close()
+
+    def update_item(self, oldItemName, newItemName, newItemDesc, newItemCateg, characterName):
+        character_id = self.get_character_id_by_name(characterName)
+        item_id = self.get_item_id_by_name_and_charid(oldItemName, character_id)
+        self.cursor.execute(f'UPDATE equipement SET equip_category = "{newItemCateg}", equip_name = "{newItemName}", equip_description = "{newItemDesc}" WHERE rowid = {item_id}')
+        self.connection.commit()
+        self.connection.close()
 
     def create_character (self, characterName, characterSpecies, characterJob, maxHP, strengthScore, agilityScore, logicScore, spiritualityScore, movementSpeed):
         self.insert_values('character_sheets',[f'("{characterName}","{characterSpecies}","{characterJob}", "0", "{maxHP}", "{maxHP}", "{strengthScore}","{agilityScore}","{logicScore}","{spiritualityScore}","{movementSpeed}","none")'])
