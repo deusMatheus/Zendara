@@ -100,11 +100,17 @@ class db_manager:
     def get_ability_category_id_by_name (self,abilityCategoryName):
         return self.cursor.execute(f'SELECT rowid FROM abilities_categories WHERE category_name = "{abilityCategoryName}"').fetchall()[0][0]
 
+    def get_ability_category_id_by_name_and_charid(self,abilityCategoryName, characterId):
+        return self.cursor.execute(f'SELECT rowid FROM abilities_categories WHERE category_name = "{abilityCategoryName}" AND character_id = "{characterId}"').fetchall()[0][0]
+
     def get_character_id_by_name (self, characterName):
         return self.cursor.execute(f'SELECT rowid FROM character_sheets WHERE character_name = "{characterName}"').fetchall()[0][0]
 
     def get_item_id_by_name_and_charid (self, itemName, characterId):
         return self.cursor.execute(f'SELECT rowid FROM equipement WHERE character_id = "{characterId}" and equip_name = "{itemName}"').fetchall()[0][0]
+
+    def get_ability_id_by_name_and_charid(self, abilityName, characterId):
+        return self.cursor.execute(f'SELECT rowid FROM abilities WHERE character_id = "{characterId}" and ability_name = "{abilityName}"').fetchall()[0][0]
 
     def update_character_atributes (self, characterName, hpScore, strengthScore, agilityScore, logicScore, spiritualityScore, movementSpeed):
         character_id = self.get_character_id_by_name(characterName)
@@ -120,6 +126,14 @@ class db_manager:
         character_id = self.get_character_id_by_name(characterName)
         item_id = self.get_item_id_by_name_and_charid(oldItemName, character_id)
         self.cursor.execute(f'UPDATE equipement SET equip_category = "{newItemCateg}", equip_name = "{newItemName}", equip_description = "{newItemDesc}" WHERE rowid = {item_id}')
+        self.connection.commit()
+        self.connection.close()
+
+    def update_ability(self, oldAbilityName, newAbilityName, newAbilityDesc, newAbilityCateg, newAbilityType, characterName):
+        character_id = self.get_character_id_by_name(characterName)
+        ability_id = self.get_ability_id_by_name_and_charid(oldAbilityName, character_id)
+        ability_category_id = self.get_ability_category_id_by_name_and_charid(newAbilityCateg, character_id)
+        self.cursor.execute(f'UPDATE abilities SET ability_category_id = "{ability_category_id}", ability_name = "{newAbilityName}", ability_type = "{newAbilityType}", ability_description = "{newAbilityDesc}" WHERE rowid = {ability_id}')
         self.connection.commit()
         self.connection.close()
 

@@ -1,6 +1,6 @@
 #####################################################################################################################
 #                   Fichas de Zendara                   
-# Versão 0.3.0
+# Versão 0.4.0
 #
 # Atualmente:
 #
@@ -16,13 +16,14 @@
 #
 #   - Permite editar itens dos personagens
 #
+#
+#   - Permite editar habilidades dos personagens (necessita de mais testes)
+#
 # Para modificar: 
 #
 #   - Ajustar o layout da ficha
 #
 #   - Permitir criação de novas categorias de habilidades 
-#
-#   - Permitir edição de habilidades existentes
 #
 #   - Permitir alteração de XP e Movimento no Visualizador de Fichas.
 #
@@ -87,6 +88,12 @@ if 'items_by_character' not in st.session_state:
 
 if 'abilities_by_character' not in st.session_state:
     st.session_state['abilities_by_character'] = False
+
+if 'items_by_character_flag' not in st.session_state:
+    st.session_state['items_by_character_flag'] = False
+
+if 'abilities_by_character_flag' not in st.session_state:
+    st.session_state['abilities_by_character_flag'] = False
 
 if 'items_by_character' not in st.session_state:
     st.session_state['items_by_character'] = []

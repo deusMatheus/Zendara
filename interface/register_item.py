@@ -31,6 +31,7 @@ def editItems(oldItemName, newItemName, newItemDesc, newItemCateg, characterName
         except:
             st.toast('Algo de errado aconteceu.')
     sleep(1)
+    st.session_state['edit_item'] = False
     st.switch_page('interface/public_page.py')
 
 if(st.session_state['register_item']):
@@ -68,8 +69,8 @@ if(st.session_state['edit_item']):
             new_item_name = st.text_input('Nome do item',value=edit_item_name,placeholder='Nome do item')
             new_item_desc = st.text_area('Descrição do item',value=edit_item_desc,placeholder='Descrição do item')
             new_item_categ = st.selectbox('Categoria do item',st.session_state['items_categories'],index=st.session_state['items_categories'].index(edit_item_category))
-            st.session_state['edit_item'] = True
             if st.form_submit_button(label='Editar item'):
+                st.session_state['edit_item'] = True
                 editItems(edit_item_name, new_item_name, new_item_desc, new_item_categ, character_name)
     else:
         st.write('Ocorreu um erro. Contate o administrador do sistema.')

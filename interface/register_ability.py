@@ -19,6 +19,19 @@ def registerAbility(abilityName, abilityDesc, abilityCateg, abilityType, charact
     st.session_state['register_ability'] = False
     st.switch_page('interface/public_page.py')
 
+def editAbility(oldAbilityname, newAbilityName, newAbilityDesc, newAbilityCateg, newAbilityType, characterName):
+    if(oldAbilityname != '' and newAbilityName != '' and newAbilityDesc != '' and newAbilityCateg != '' and newAbilityType != '' and characterName !=''):
+        try:
+            db().update_ability(oldAbilityname, newAbilityName, newAbilityDesc, newAbilityCateg, newAbilityType, characterName)
+            st.write('Edição de conhecimento concluído!')
+            st.toast('Edição de conhecimento concluído!')
+            st.toast('Edição de conhecimento concluído!')
+        except:
+            st.toast('Algo de errado aconteceu.')
+    sleep(1)
+    st.session_state['edit_ability'] = False
+    st.switch_page('interface/public_page.py')
+
 if(st.session_state['register_ability']):
     st.title(f'Registrar Conhecimento para {st.session_state['character_name']}')
 #            st.session_state['register_pressed'] = True
@@ -32,6 +45,36 @@ if(st.session_state['register_ability']):
         if st.form_submit_button(label='Registrar'):
             registerAbility(ability_name, ability_desc, ability_categ, ability_type, character_name)
 
+elif(st.session_state['edit_ability']):
+    character_name = st.session_state['character_name']
+    edit_ability_name = ''
+    edit_ability_desc = ''
+    edit_ability_categ = ''
+    edit_ability_type = ''
+
+    st.title(f'Selecione um Conhecimento de {character_name} para editar')
+    ability_list_names = []
+    for ability in st.session_state['abilities_by_character']:
+        ability_list_names.append(ability['habilidade']['nome'])
+    selected_ability = st.selectbox('Selecione um conhecimento',ability_list_names,placeholder='Selecione um conhecimento', index=None)
+
+    if(not selected_ability):
+        st.write('Nenhum conhecimento selecionado')
+    else:
+        for ability in st.session_state['abilities_by_character']:
+            if(selected_ability in ability['habilidade']['nome']):
+                edit_ability_name = ability['habilidade']['nome']
+                edit_ability_desc = ability['habilidade']['desc']
+                edit_ability_type = ability['habilidade']['tipo']
+                edit_ability_categ = ability['categoria']
+        with st.form('edit_ability_form'):
+            new_ability_name = st.text_input('Nome do conhecimento', value=edit_ability_name, placeholder='Nome do conhecimento')
+            new_ability_desc = st.text_area('Descrição do conhecimento',value=edit_ability_desc, placeholder='Descrição do conhecimento')
+            new_ability_categ = st.selectbox('Categoria do conhecimento',st.session_state['abilities_categories_by_character'],index=st.session_state['abilities_categories_by_character'].index(edit_ability_categ))
+            new_ability_type = st.selectbox('Tipo do conhecimento',['Habilidade','Magia','Peripécia'],index=['Habilidade','Magia','Peripécia'].index(edit_ability_type))
+            if st.form_submit_button(label='Editar habilidade'):
+                st.session_state['edit_ability'] = True
+                editAbility(edit_ability_name, new_ability_name, new_ability_desc, new_ability_categ, new_ability_type, character_name)
 else:
     st.title("Ops!")
     st.write('Para registrar um conhecimento, primeiro selecione um personagem no **Visualizador de fichas** e clique no botão **Cadastrar novo conhecimento**.')

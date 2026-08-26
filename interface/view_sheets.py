@@ -99,13 +99,13 @@ else:
         items_by_character = db().list_items_by_character(characters_list[character_index][0])
 
         if items_by_character:
-            st.session_state['items_by_character'] = True
+            st.session_state['items_by_character_flag'] = True
         else:
-            st.session_state['items_by_character'] = False
+            st.session_state['items_by_character_flag'] = False
 
         items_buttons_columns = st.columns(2)
         items_buttons_columns[0].button('Cadastrar novo Equipamento',key='register_item_button')
-        items_buttons_columns[1].button('Editar Equipamento',key='edit_item_button', disabled=(not st.session_state['items_by_character']))
+        items_buttons_columns[1].button('Editar Equipamento',key='edit_item_button', disabled=(not st.session_state['items_by_character_flag']))
 
         if(st.session_state['register_item_button']):
             st.session_state['register_item'] = True
@@ -139,13 +139,13 @@ else:
         abilities_categories_by_character_formated = []
 
         if(abilities_by_character):
-            st.session_state['abilities_by_character'] = True
+            st.session_state['abilities_by_character_flag'] = True
         else:
-            st.session_state['abilities_by_character'] = False
+            st.session_state['abilities_by_character_flag'] = False
 
         abilities_buttons_columns = st.columns(2)
         abilities_buttons_columns[0].button('Cadastrar novo Conhecimento',key='register_ability_button')
-        abilities_buttons_columns[1].button('Editar Conhecimento',key='edit_ability_button',disabled=(not st.session_state['abilities_by_character']))
+        abilities_buttons_columns[1].button('Editar Conhecimento',key='edit_ability_button',disabled=(not st.session_state['abilities_by_character_flag']))
 
         list_of_tabs = []
         for category in abilities_categories_by_character:
@@ -165,6 +165,7 @@ else:
         if(st.session_state['edit_ability_button']):
             st.session_state['register_ability'] = False
             st.session_state['edit_ability'] = True
+            st.session_state['abilities_by_character'] = abilities_by_character
             st.switch_page('interface/register_ability.py')
 
         tabs = st.tabs(list_of_tabs)
