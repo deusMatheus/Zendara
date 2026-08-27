@@ -1,6 +1,6 @@
 #####################################################################################################################
 #                   Fichas de Zendara                   
-# Versão 0.4.1
+# Versão 0.4.2
 #
 # Atualmente:
 #
@@ -12,10 +12,9 @@
 #
 #   - Retiradas as colunas de equipamentos da tabela de personagenns.
 #
-#   - Permite editar atributos e HP dos personagens
+#   - Permite editar atributos, HP, xp e velocidade de movimento dos personagens
 #
 #   - Permite editar itens dos personagens
-#
 #
 #   - Permite editar habilidades dos personagens (necessita de mais testes)
 #
@@ -23,9 +22,7 @@
 #
 #   - Ajustar o layout da ficha
 #
-#   - Permitir criação de novas categorias de habilidades 
-#
-#   - Permitir alteração de XP e Movimento no Visualizador de Fichas.
+#   - Permitir adicionar condições na ficha
 #
 #   - Colocar novas classes na pasta de Classes e realizar a comunicação com o DB por lá ao invés da pasta Interface.
 #

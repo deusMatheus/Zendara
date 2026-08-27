@@ -112,13 +112,13 @@ class db_manager:
     def get_ability_id_by_name_and_charid(self, abilityName, characterId):
         return self.cursor.execute(f'SELECT rowid FROM abilities WHERE character_id = "{characterId}" and ability_name = "{abilityName}"').fetchall()[0][0]
 
-    def update_character_atributes (self, characterName, hpScore, strengthScore, agilityScore, logicScore, spiritualityScore, movementSpeed):
+    def update_character_atributes (self, characterName, hpScore, strengthScore, agilityScore, logicScore, spiritualityScore, movementSpeed, xp):
         character_id = self.get_character_id_by_name(characterName)
         max_hp = self.cursor.execute(f'SELECT max_hp FROM character_sheets WHERE rowid = {character_id}').fetchall()[0][0]
         if(int(hpScore) > int(max_hp)):
-            self.cursor.execute(f'UPDATE character_sheets SET max_hp = "{hpScore}", current_hp="{hpScore}", strength_score = "{strengthScore}", agility_score = "{agilityScore}", logic_score = "{logicScore}", spirituality_score = "{spiritualityScore}", movement_speed = "{movementSpeed}" WHERE rowid = {character_id}')
+            self.cursor.execute(f'UPDATE character_sheets SET max_hp = "{hpScore}", current_hp="{hpScore}", strength_score = "{strengthScore}", agility_score = "{agilityScore}", logic_score = "{logicScore}", spirituality_score = "{spiritualityScore}", movement_speed = "{movementSpeed}", character_xp = "{xp}" WHERE rowid = {character_id}')
         else:
-            self.cursor.execute(f'UPDATE character_sheets SET current_hp="{hpScore}", strength_score = "{strengthScore}", agility_score = "{agilityScore}", logic_score = "{logicScore}", spirituality_score = "{spiritualityScore}", movement_speed = "{movementSpeed}" WHERE rowid = {character_id}')
+            self.cursor.execute(f'UPDATE character_sheets SET current_hp="{hpScore}", strength_score = "{strengthScore}", agility_score = "{agilityScore}", logic_score = "{logicScore}", spirituality_score = "{spiritualityScore}", movement_speed = "{movementSpeed}", character_xp = "{xp}" WHERE rowid = {character_id}')
         self.connection.commit()
         self.connection.close()
 
