@@ -1,6 +1,6 @@
 #####################################################################################################################
 #                   Fichas de Zendara                   
-# Versão 0.4.2
+# Versão 0.4.4
 #
 # Atualmente:
 #
@@ -61,7 +61,7 @@ st.set_page_config(layout="centered", initial_sidebar_state="collapsed")
 #    css = file.read()
 #st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
-st.session_state['version'] = 'V 0.4.0'
+st.session_state['version'] = 'V 0.4.4'
 
 if 'characters_list' not in st.session_state:
     st.session_state['characters_list'] = db().select_values("*",'character_sheets')

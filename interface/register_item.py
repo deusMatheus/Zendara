@@ -19,7 +19,7 @@ def registerItems(itemName, itemDesc, itemCateg, characterName):
             st.toast('Algo de errado aconteceu.')
     sleep(1)
     st.session_state['register_item'] = False
-    st.switch_page('interface/public_page.py')
+    st.switch_page('interface/view_sheets.py')
 
 def editItems(oldItemName, newItemName, newItemDesc, newItemCateg, characterName):
     if(oldItemName != '' and newItemName != '' and newItemDesc != '' and newItemCateg != '' and characterName != ''):
@@ -32,7 +32,7 @@ def editItems(oldItemName, newItemName, newItemDesc, newItemCateg, characterName
             st.toast('Algo de errado aconteceu.')
     sleep(1)
     st.session_state['edit_item'] = False
-    st.switch_page('interface/public_page.py')
+    st.switch_page('interface/view_sheets.py')
 
 if(st.session_state['register_item']):
     st.title(f'Registrar Item para {st.session_state['character_name']}')

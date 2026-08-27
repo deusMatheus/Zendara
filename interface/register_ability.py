@@ -17,7 +17,7 @@ def registerAbility(abilityName, abilityDesc, abilityCateg, abilityType, charact
             st.toast('Algo de errado aconteceu.')
     sleep(1)
     st.session_state['register_ability'] = False
-    st.switch_page('interface/public_page.py')
+    st.switch_page('interface/view_sheets.py')
 
 def editAbility(oldAbilityname, newAbilityName, newAbilityDesc, newAbilityCateg, newAbilityType, characterName):
     if(oldAbilityname != '' and newAbilityName != '' and newAbilityDesc != '' and newAbilityCateg != '' and newAbilityType != '' and characterName !=''):
@@ -30,7 +30,7 @@ def editAbility(oldAbilityname, newAbilityName, newAbilityDesc, newAbilityCateg,
             st.toast('Algo de errado aconteceu.')
     sleep(1)
     st.session_state['edit_ability'] = False
-    st.switch_page('interface/public_page.py')
+    st.switch_page('interface/view_sheets.py')
 
 if(st.session_state['register_ability']):
     st.title(f'Registrar Conhecimento para {st.session_state['character_name']}')

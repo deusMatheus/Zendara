@@ -71,7 +71,7 @@ else:
         list_of_columns_job_species[1].subheader(f'{list_of_properties[2]}: {characters_list[character_index][2]}')
 #        with st.container(height=input_number_pixels, key='Teste', border=False):
 
-        list_of_columns_properties = st.columns(3,gap='xxsmall',border=True)
+        list_of_columns_properties = st.columns(3,gap='small',border=True)
         list_of_columns_properties[0].number_input(f'**HP (Max {characters_list[character_index][4]})**',0,value=int(characters_list[character_index][5]),width=int(input_number_pixels), key=f'hp_score_{characters_list[character_index][0]}')
 
 #        list_of_columns_properties[1].write(f'**{list_of_properties[1]}**  \n{characters_list[character_index][1]}')
@@ -80,7 +80,7 @@ else:
         list_of_columns_properties[1].number_input(f'**XP**', 0, value=int(characters_list[character_index][3]),width=int(input_number_pixels), key=f'xp_score_{characters_list[character_index][0]}')
         list_of_columns_properties[2].number_input(f'**Movimento**',0,value=int(characters_list[character_index][10]),width=int(input_number_pixels), key=f'mov_score_{characters_list[character_index][0]}')
         
-        list_of_columns_atributes = st.columns(4,gap='xxsmall' ,border=True)
+        list_of_columns_atributes = st.columns(4,gap='small' ,border=True)
         list_of_columns_atributes[0].number_input(f'**{list_of_properties[6]}**',0,value=int(characters_list[character_index][6]),width=int(input_number_pixels),key=f'str_score_{characters_list[character_index][0]}')
         list_of_columns_atributes[1].number_input(f'**{list_of_properties[7]}**',0,value=int(characters_list[character_index][7]),width=int(input_number_pixels),key=f'agi_score_{characters_list[character_index][0]}')
         list_of_columns_atributes[2].number_input(f'**{list_of_properties[8]}**',0,value=int(characters_list[character_index][8]),width=int(input_number_pixels),key=f'lgc_score_{characters_list[character_index][0]}')
