@@ -3,7 +3,7 @@ import streamlit as st
 #import tailwind as tw
 from classes.db_manager import db_manager as db
 
-input_number_pixels = 125
+input_number_pixels = 135
 
 if 'characters_list' in st.session_state:
     st.session_state['characters_list'] = db().select_values("*",'character_sheets')
@@ -63,14 +63,24 @@ else:
 
     elif(character_selected in character_names):
         character_index = character_names.index(character_selected)
+
         st.subheader(characters_list[character_index][0])
 #        with st.container(height=input_number_pixels, key='Teste', border=False):
-        st.number_input(f'HP (Max {characters_list[character_index][4]})',0,value=int(characters_list[character_index][5]),width=int(input_number_pixels), key=f'hp_score_{characters_list[character_index][0]}')
-        list_of_columns = st.columns(4, border=True)
-        list_of_columns[0].number_input(f'{list_of_properties[6]}',0,value=int(characters_list[character_index][6]),width=int(input_number_pixels),key=f'str_score_{characters_list[character_index][0]}')
-        list_of_columns[1].number_input(f'{list_of_properties[7]}',0,value=int(characters_list[character_index][7]),width=int(input_number_pixels),key=f'agi_score_{characters_list[character_index][0]}')
-        list_of_columns[2].number_input(f'{list_of_properties[8]}',0,value=int(characters_list[character_index][8]),width=int(input_number_pixels),key=f'lgc_score_{characters_list[character_index][0]}')
-        list_of_columns[3].number_input(f'{list_of_properties[9]}',0,value=int(characters_list[character_index][9]),width=int(input_number_pixels),key=f'spr_score_{characters_list[character_index][0]}')
+
+        list_of_columns_properties = st.columns(5,gap='xxsmall',border=True)
+        list_of_columns_properties[0].number_input(f'HP (Max {characters_list[character_index][4]})',0,value=int(characters_list[character_index][5]),width=int(input_number_pixels), key=f'hp_score_{characters_list[character_index][0]}')
+
+        list_of_columns_properties[1].write(f'{list_of_properties[1]}  \n{characters_list[character_index][1]}')
+        list_of_columns_properties[2].write(f'{list_of_properties[2]}  \n{characters_list[character_index][2]}')
+
+        list_of_columns_properties[3].number_input(f'XP', 0, value=int(characters_list[character_index][3]),width=int(input_number_pixels), key=f'xp_score_{characters_list[character_index][0]}')
+        list_of_columns_properties[4].number_input(f'Movimento',0,value=int(characters_list[character_index][10]),width=int(input_number_pixels), key=f'mov_score_{characters_list[character_index][0]}')
+        
+        list_of_columns_atributes = st.columns(4,gap='xxsmall' ,border=True)
+        list_of_columns_atributes[0].number_input(f'{list_of_properties[6]}',0,value=int(characters_list[character_index][6]),width=int(input_number_pixels),key=f'str_score_{characters_list[character_index][0]}')
+        list_of_columns_atributes[1].number_input(f'{list_of_properties[7]}',0,value=int(characters_list[character_index][7]),width=int(input_number_pixels),key=f'agi_score_{characters_list[character_index][0]}')
+        list_of_columns_atributes[2].number_input(f'{list_of_properties[8]}',0,value=int(characters_list[character_index][8]),width=int(input_number_pixels),key=f'lgc_score_{characters_list[character_index][0]}')
+        list_of_columns_atributes[3].number_input(f'{list_of_properties[9]}',0,value=int(characters_list[character_index][9]),width=int(input_number_pixels),key=f'spr_score_{characters_list[character_index][0]}')
 
         if(int(st.session_state[f'hp_score_{characters_list[character_index][0]}']) != int(characters_list[character_index][5]) or int(st.session_state[f'str_score_{characters_list[character_index][0]}']) != int(characters_list[character_index][6]) or int(st.session_state[f'agi_score_{characters_list[character_index][0]}']) != int(characters_list[character_index][7]) or int(st.session_state[f'lgc_score_{characters_list[character_index][0]}']) != int(characters_list[character_index][8]) or int(st.session_state[f'spr_score_{characters_list[character_index][0]}']) != int(characters_list[character_index][9])):        
             st.session_state['disabled_button'] = False
@@ -89,9 +99,9 @@ else:
                 sleep(3)
             st.switch_page('interface/view_sheets.py')
 
-        for j in range(len(list_of_properties)):
-            if((j<6 or j>9) and j!=0 and j!=4 and j!=5):
-                st.write(f'{list_of_properties[j]}: {characters_list[character_index][j]}')
+#        for j in range(len(list_of_properties)):
+#            if((j<6 or j>9) and j!=0 and j!=4 and j!=5):
+#                st.write(f'{list_of_properties[j]}: {characters_list[character_index][j]}')
 #        skill_categories = characters_list[character_index][-1].split(",")
 
         st.title('Equipamentos')
@@ -123,7 +133,7 @@ else:
         items_tabs = st.tabs(list_of_items_tabs)
         for i in range(len(items_tabs)):
             with items_tabs[i]:
-                if not st.session_state['items_by_character']:
+                if not st.session_state['items_by_character_flag']:
                     st.write('Não há itens cadastrados para este personagem.')
                 else:
                     for item in items_by_character:

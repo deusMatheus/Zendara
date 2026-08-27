@@ -1,6 +1,6 @@
 #####################################################################################################################
 #                   Fichas de Zendara                   
-# Versão 0.4.0
+# Versão 0.4.1
 #
 # Atualmente:
 #
@@ -28,6 +28,16 @@
 #   - Permitir alteração de XP e Movimento no Visualizador de Fichas.
 #
 #   - Colocar novas classes na pasta de Classes e realizar a comunicação com o DB por lá ao invés da pasta Interface.
+#
+#   - Permitir inserir imagens dos personagens
+#
+#   - Permitir backup por e-mail
+#
+#   - Permitir full reset
+#
+#   - Criar um log e armazenar no DB
+#
+#   - Limpar código comentado
 #   
 # Bugs conhecidos: 
 #
@@ -45,7 +55,7 @@ import streamlit as st
 #import tailwind as tw
 from classes.db_manager import db_manager as db
 
-#st.set_page_config(layout="wide")
+st.set_page_config(layout="centered", initial_sidebar_state="collapsed")
 
 #list_of_properties = ["Nome", "Espécie","Vocação","Nível","HP máximo", "Hp atual","Força","Agilidade","Raciocínio","Espiritualidade","Movimento","Equipamentos","Armas","Armadura","Condição"]
 
@@ -54,7 +64,7 @@ from classes.db_manager import db_manager as db
 #    css = file.read()
 #st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
-st.session_state['version'] = 'V 0.2.0'
+st.session_state['version'] = 'V 0.4.0'
 
 if 'characters_list' not in st.session_state:
     st.session_state['characters_list'] = db().select_values("*",'character_sheets')
