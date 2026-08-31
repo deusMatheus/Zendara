@@ -1,10 +1,10 @@
 #####################################################################################################################
 #                   Fichas de Zendara                   
-# Versão 0.4.5
+# Versão 0.4.6
 #
 # Atualmente:
 #
-#   - Permite cadastrar e visualizar fichas. 
+#   - Permite cadastrar e visualizar fichas, com valores de atributos, experiência e movimento como valores inteiros. 
 #
 #   - Permite cadastrar e visualizar itens e habilidades para cada personagem.  
 #
@@ -18,21 +18,23 @@
 #
 #   - Permite editar habilidades dos personagens (necessita de mais testes)
 #
+#   - Adicionados Encantamentos, Habilidades, Magias e Perspicácias como categorias de conhecimentos.
+#
 # Para modificar: 
 #
-#   - Ajustar o layout da ficha
-#
 #   - Permitir adicionar condições na ficha
-#
-#   - Colocar novas classes na pasta de Classes e realizar a comunicação com o DB por lá ao invés da pasta Interface.
 #
 #   - Permitir inserir imagens dos personagens
 #
 #   - Permitir backup por e-mail
 #
+#   - Permitir exclusão de ficha
+#
 #   - Permitir full reset
 #
 #   - Criar um log e armazenar no DB
+#
+#   - Colocar novas classes na pasta de Classes e realizar a comunicação com o DB por lá ao invés da pasta Interface.
 #
 #   - Limpar código comentado
 #   
@@ -116,8 +118,8 @@ pages = [
     st.Page('interface/public_page.py', title='Página inicial'),
     st.Page('interface/create_sheets.py', title='Criador de Fichas'),
     st.Page('interface/view_sheets.py', title='Visualizador de Fichas'),
-    st.Page('interface/register_ability.py', title='Registrar Habilidade'),
-    st.Page('interface/register_item.py', title='Registrar Item')
+    st.Page('interface/register_ability.py', title='Registrar Conhecimento'),
+    st.Page('interface/register_item.py', title='Registrar Equipamento')
     ]
 
 pg = st.navigation(pages)

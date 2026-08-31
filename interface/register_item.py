@@ -45,7 +45,7 @@ if(st.session_state['register_item']):
         if st.form_submit_button(label='Registrar'):
             registerItems(item_name, item_desc, item_categ, character_name)
 
-if(st.session_state['edit_item']):
+elif(st.session_state['edit_item']):
     character_name = st.session_state['character_name']
     edit_item_category = ''
     edit_item_name = ''
@@ -77,5 +77,5 @@ if(st.session_state['edit_item']):
 
 else:
     st.title("Ops!")
-    st.write('Para registrar um item, primeiro selecione um personagem no **Visualizador de fichas** e clique no botão **Cadastrar novo item**.')
+    st.write('Para registrar um item, primeiro selecione um personagem no **Visualizador de fichas** e clique no botão **Cadastrar novo Equipamento**.')
 

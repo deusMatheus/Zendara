@@ -9,24 +9,31 @@ st.session_state['edit_item'] = False
 
 
 st.title("Criador de fichas")
-list_of_properties = ["Nome do personagem", "Espécie","Vocação","Força","Agilidade","Raciocínio","Espiritualidade","Movimento"]
-list_of_inputs = []
 
 with st.form("form_char_sheet_creation"):
-    for property in list_of_properties:
-        char_input = st.text_input(property)
-        list_of_inputs.append(char_input)
+    char_name = st.text_input('Nome do personagem',placeholder='Nome do Personagem')
+    char_spec = st.text_input('Espécie',placeholder='Espécie')
+    char_job = st.text_input('Vocação',placeholder='Vocação')
+    char_str = st.number_input('Força',0,step=1)
+    char_agi = st.number_input('Agilidade',0,step=1)
+    char_log = st.number_input('Raciocínio',0,step=1)
+    char_spr = st.number_input('Espiritualidade',0,step=1)
+    char_mov = st.number_input('Movimento',0,step=1)
     create_sheet_button = st.form_submit_button('Criar ficha')
 
     if(create_sheet_button):
-        try:
-            db().create_character(list_of_inputs[0],list_of_inputs[1],list_of_inputs[2],"20",list_of_inputs[3],list_of_inputs[4],list_of_inputs[5],list_of_inputs[6],list_of_inputs[7])
-            st.warning('Sucesso na criação da ficha! Aguarde...')
-            time.sleep(3)
-#        st.switch_page('public_page.py')
+        if(char_name != '' and
+           char_spec != '' and
+           char_job != ''):
+            try:
+                db().create_character(char_name,char_spec,char_job,"20",char_str,char_agi,char_log,char_spr,char_mov)
+                st.warning('Sucesso na criação da ficha! Aguarde...')
+                time.sleep(3)
 
-        except:
-            st.warning('Aconteceu um erro')
-            time.sleep(3)
-        st.switch_page('interface/public_page.py')
+            except:
+                st.warning('Aconteceu um erro')
+                time.sleep(3)
+            st.switch_page('interface/public_page.py')
+        else:
+            st.warning('Não foi possível criar a ficha pois há campos em branco.')
 

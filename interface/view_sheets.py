@@ -204,7 +204,6 @@ else:
                     for ability in abilities_by_character:
                         if list_of_tabs[i] == ability['categoria']:
                             st.subheader(ability['habilidade']['nome'])
-                            st.write(f'_{ability['habilidade']['tipo']}_')
                             st.write(ability['habilidade']['desc'])
                             st.divider()
                         elif list_of_tabs[i] != ability['categoria'] and not ability['categoria']:
