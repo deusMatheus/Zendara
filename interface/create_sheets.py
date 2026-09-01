@@ -6,7 +6,8 @@ st.session_state['register_ability'] = False
 st.session_state['edit_ability'] = False
 st.session_state['register_item'] = False
 st.session_state['edit_item'] = False
-
+st.session_state['selected_character'] = False
+st.session_state['character_index'] = None
 
 st.title("Criador de fichas")
 
@@ -33,7 +34,7 @@ with st.form("form_char_sheet_creation"):
             except:
                 st.warning('Aconteceu um erro')
                 time.sleep(3)
-            st.switch_page('interface/public_page.py')
+            st.switch_page('interface/view_sheets.py')
         else:
             st.warning('Não foi possível criar a ficha pois há campos em branco.')
 

@@ -42,7 +42,7 @@ st.session_state['edit_item'] = False
 #    st.session_state['register_form'] = False
 #    st.session_state['register_ability'] = False
 #
-st.title("Visualizador de fichas")
+st.subheader("Visualizador de fichas")
 list_of_properties = ["Nome", "Espécie","Vocação","Pontos de Experiência","HP máximo", "Hp atual","Força","Agilidade","Raciocínio","Espiritualidade","Movimento"]
 
 #characters_list = db().select_values("*",'character_sheets')
@@ -56,13 +56,16 @@ if not characters_list:
     st.write('Não há personagens cadastrados.')
 
 else:
-    character_selected = st.selectbox('Selecione um personagem',character_names,placeholder='Selecione um personagem',index=None)
+    character_selected = st.selectbox('Selecione um personagem',character_names,placeholder='Selecione um personagem',index=st.session_state['character_index'])
 
-    if(not character_selected):
+    if(not character_selected and not st.session_state['selected_character']):
         st.write('Nenhum personagem selecionado')
 
-    elif(character_selected in character_names):
-        character_index = character_names.index(character_selected)
+    elif(character_selected):
+        st.session_state['selected_character'] = True
+        st.session_state['selected_character_name'] = character_selected
+        st.session_state['character_index'] = character_names.index(character_selected)
+        character_index = st.session_state['character_index']
 
         st.title(characters_list[character_index][0])
 

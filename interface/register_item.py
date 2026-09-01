@@ -38,8 +38,8 @@ if(st.session_state['register_item']):
     st.title(f'Registrar Item para {st.session_state['character_name']}')
     with st.form('register_item_form'):
         character_name = st.session_state['character_name'] 
-        item_name = st.text_input('Nome do Item', placeholder='Nome do Conhecimento', key='items_name')
-        item_desc = st.text_area('Descrição do Item', placeholder='Descrição do Conhecimento', key='items_desc')
+        item_name = st.text_input('Nome do Item', placeholder='Nome do Item', key='items_name')
+        item_desc = st.text_area('Descrição do Item', placeholder='Descrição do Item', key='items_desc')
         item_categ = st.selectbox('Selecione uma categoria', items_categories, placeholder='Selecione uma categoria', index=None, key='items_categ')
         st.session_state['register_item'] = True 
         if st.form_submit_button(label='Registrar'):

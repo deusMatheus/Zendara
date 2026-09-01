@@ -9,6 +9,9 @@ st.session_state['edit_item'] = False
 st.title(f"Fichas de Zendara {st.session_state['version']}")
 st.write('O que deseja?')
 
+st.session_state['selected_character'] = False
+st.session_state['character_index'] = None
+
 create_sheets = st.button('Criar Fichas')
 #create_sheets = ''
 view_sheets = st.button('Visualizar Fichas')

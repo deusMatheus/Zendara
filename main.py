@@ -1,6 +1,6 @@
 #####################################################################################################################
 #                   Fichas de Zendara                   
-# Versão 0.4.6
+# Versão 0.4.7
 #
 # Atualmente:
 #
@@ -19,6 +19,9 @@
 #   - Permite editar habilidades dos personagens (necessita de mais testes)
 #
 #   - Adicionados Encantamentos, Habilidades, Magias e Perspicácias como categorias de conhecimentos.
+#
+#   - Ao alterar a ficha, adicionar/editar itens e conhecimentos, retorna para a página de visualização da ficha
+#       no personagem escolhido previamente.
 #
 # Para modificar: 
 #
@@ -63,7 +66,7 @@ st.set_page_config(layout="centered", initial_sidebar_state="collapsed")
 #    css = file.read()
 #st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
-st.session_state['version'] = 'V 0.4.5'
+st.session_state['version'] = 'V 0.4.7'
 
 if 'characters_list' not in st.session_state:
     st.session_state['characters_list'] = db().select_values("*",'character_sheets')
@@ -109,6 +112,15 @@ if 'items_by_character' not in st.session_state:
 
 if 'items_categories' not in st.session_state:
     st.session_state['items_categories'] = ['Arma', 'Armadura', 'Mundano', 'Mágico']
+
+if 'selected_character' not in st.session_state:
+    st.session_state['selected_character'] = False
+
+if 'selected_character_name' not in st.session_state:
+    st.session_state['selected_character_name'] = ''
+
+if 'character_index' not in st.session_state:
+    st.session_state['character_index'] = None
 
 #print(st.session_state['characters_list'])
 #print(st.session_state['abilities_categories_list'])
