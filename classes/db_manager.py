@@ -35,11 +35,11 @@ class db_manager:
     def reset_all(self):
         self.delete_tables()
         self.create_table('users','(username, password, name, privilege)')
-        self.create_table('character_sheets','(character_name, character_species, character_job, character_xp, max_hp, current_hp, strength_score, agility_score, logic_score, spirituality_score, movement_speed, condition)')
-#        self.create_table('character_sheets','(character_name, character_species, character_job, character_xp, max_hp, current_hp, strength_score, agility_score, logic_score, spirituality_score, movement_speed, equipment_list, weapons, armor, condition)')
+        self.create_table('character_sheets','(character_name, character_species, character_job, character_xp, max_hp, current_hp, strength_score, agility_score, logic_score, spirituality_score, movement_speed, defense_score, list_of_conditions)')
         self.create_table('abilities_categories',('(character_id, category_name)'))
         self.create_table('abilities','(character_id, ability_category_id, ability_name, ability_description)')
         self.create_table('equipement','(character_id, equip_category, equip_name, equip_description)')
+        self.create_table('conditions','(condition_name, condition_description)')
 
     def list_abilities_categories_by_character(self, characterName):
         character_id = self.cursor.execute(f'SELECT rowid FROM character_sheets WHERE character_name = "{characterName}"').fetchall()[0][0]
@@ -111,13 +111,13 @@ class db_manager:
     def get_ability_id_by_name_and_charid(self, abilityName, characterId):
         return self.cursor.execute(f'SELECT rowid FROM abilities WHERE character_id = "{characterId}" and ability_name = "{abilityName}"').fetchall()[0][0]
 
-    def update_character_atributes (self, characterName, hpScore, strengthScore, agilityScore, logicScore, spiritualityScore, movementSpeed, xp):
+    def update_character_atributes (self, characterName, hpScore, strengthScore, agilityScore, logicScore, spiritualityScore, movementSpeed, xp, defenseScore):
         character_id = self.get_character_id_by_name(characterName)
         max_hp = self.cursor.execute(f'SELECT max_hp FROM character_sheets WHERE rowid = {character_id}').fetchall()[0][0]
         if(int(hpScore) > int(max_hp)):
-            self.cursor.execute(f'UPDATE character_sheets SET max_hp = "{hpScore}", current_hp="{hpScore}", strength_score = "{strengthScore}", agility_score = "{agilityScore}", logic_score = "{logicScore}", spirituality_score = "{spiritualityScore}", movement_speed = "{movementSpeed}", character_xp = "{xp}" WHERE rowid = {character_id}')
+            self.cursor.execute(f'UPDATE character_sheets SET max_hp = "{hpScore}", current_hp="{hpScore}", strength_score = "{strengthScore}", agility_score = "{agilityScore}", logic_score = "{logicScore}", spirituality_score = "{spiritualityScore}", movement_speed = "{movementSpeed}", character_xp = "{xp}", defense_score = "{defenseScore}" WHERE rowid = {character_id}')
         else:
-            self.cursor.execute(f'UPDATE character_sheets SET current_hp="{hpScore}", strength_score = "{strengthScore}", agility_score = "{agilityScore}", logic_score = "{logicScore}", spirituality_score = "{spiritualityScore}", movement_speed = "{movementSpeed}", character_xp = "{xp}" WHERE rowid = {character_id}')
+            self.cursor.execute(f'UPDATE character_sheets SET current_hp="{hpScore}", strength_score = "{strengthScore}", agility_score = "{agilityScore}", logic_score = "{logicScore}", spirituality_score = "{spiritualityScore}", movement_speed = "{movementSpeed}", character_xp = "{xp}", defense_score = "{defenseScore}" WHERE rowid = {character_id}')
         self.connection.commit()
         self.connection.close()
 
@@ -137,9 +137,9 @@ class db_manager:
         self.connection.close()
 
     def create_character (self, characterName, characterSpecies, characterJob, maxHP, strengthScore, agilityScore, logicScore, spiritualityScore, movementSpeed):
-        self.insert_values('character_sheets',[f'("{characterName}","{characterSpecies}","{characterJob}", "0", "{maxHP}", "{maxHP}", "{strengthScore}","{agilityScore}","{logicScore}","{spiritualityScore}","{movementSpeed}","none")'])
+        self.insert_values('character_sheets',[f'("{characterName}","{characterSpecies}","{characterJob}", "0", "{maxHP}", "{maxHP}", "{strengthScore}","{agilityScore}","{logicScore}","{spiritualityScore}","{movementSpeed}","0","none")'])
         character_id = self.get_character_id_by_name(characterName)
-        list_of_categories = ["Conhecimentos de Vocação","Conhecimentos de Espécie","Encantamento","Habilidade","Magia","Peripécia"]
+        list_of_categories = ["Vocação","Espécie","Encantamento","Habilidade","Magia","Perspicácia"]
         for category in list_of_categories:
             self.insert_values('abilities_categories',[f'("{character_id}","{category}")'])
 #        self.insert_values('abilities_categories',[f'("{character_id}","Conhecimentos de Espécie")'])

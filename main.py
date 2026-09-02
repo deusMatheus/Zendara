@@ -1,6 +1,6 @@
 #####################################################################################################################
 #                   Fichas de Zendara                   
-# Versão 0.4.7
+# Versão 0.4.8
 #
 # Atualmente:
 #
@@ -43,7 +43,7 @@
 #   
 # Bugs conhecidos: 
 #
-#   - Não há bugs conhecidos no momento.
+#   - Ao realizar alguma alteração nos atributos da ficha, o botão Aplicar Mudanças fica sempre ativado
 #
 # Bugs resolvidos: 
 #
@@ -52,6 +52,10 @@
 #       o que chama apenas uma única vez e é armazenado em st.session.
 #
 #####################################################################################################################
+# Tirar mundano e mágico e colocar mochila em Equipamento - [v]
+# Colocar Defesa junto com o atributos
+# Colocar as habilidades especiais de cada atributo como está no livro
+# Mudar de Peripécia para Perspicácia
 
 import streamlit as st
 #import tailwind as tw
@@ -66,7 +70,7 @@ st.set_page_config(layout="centered", initial_sidebar_state="collapsed")
 #    css = file.read()
 #st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
-st.session_state['version'] = 'V 0.4.7'
+st.session_state['version'] = 'V 0.4.8'
 
 if 'characters_list' not in st.session_state:
     st.session_state['characters_list'] = db().select_values("*",'character_sheets')
@@ -111,7 +115,7 @@ if 'items_by_character' not in st.session_state:
     st.session_state['items_by_character'] = []
 
 if 'items_categories' not in st.session_state:
-    st.session_state['items_categories'] = ['Arma', 'Armadura', 'Mundano', 'Mágico']
+    st.session_state['items_categories'] = ['Arma', 'Armadura', 'Mochila']
 
 if 'selected_character' not in st.session_state:
     st.session_state['selected_character'] = False

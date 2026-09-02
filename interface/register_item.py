@@ -5,7 +5,7 @@ from classes.db_manager import db_manager as db
 st.session_state['register_ability'] = False
 st.session_state['edit_ability'] = False
 
-items_categories = ['Arma', 'Armadura', 'Mundano', 'Mágico']
+items_categories = st.session_state['items_categories']
 
 def registerItems(itemName, itemDesc, itemCateg, characterName):
     st.session_state['register_form_item'] = True
