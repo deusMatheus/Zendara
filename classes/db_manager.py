@@ -1,4 +1,5 @@
 import sqlite3
+import pandas as pd
 
 class db_manager:
 
@@ -24,6 +25,7 @@ class db_manager:
         self.cursor.execute('DROP TABLE abilities_categories')
         self.cursor.execute('DROP TABLE abilities')
         self.cursor.execute('DROP TABLE equipement')
+        self.cursor.execute('DROP TABLE conditions')
         self.connection.commit()
 
     def select_values(self, columns_string, table_name):
@@ -40,6 +42,7 @@ class db_manager:
         self.create_table('abilities','(character_id, ability_category_id, ability_name, ability_description)')
         self.create_table('equipement','(character_id, equip_category, equip_name, equip_description)')
         self.create_table('conditions','(condition_name, condition_description)')
+        self.import_conditions()
 
     def list_abilities_categories_by_character(self, characterName):
         character_id = self.cursor.execute(f'SELECT rowid FROM character_sheets WHERE character_name = "{characterName}"').fetchall()[0][0]
@@ -92,6 +95,16 @@ class db_manager:
                 }
             })
         return list_of_items_formatted
+
+    def list_conditions(self):
+        unformated_conditions = self.cursor.execute('SELECT * FROM conditions').fetchall()
+        formated_conditions = []
+        for condition in unformated_conditions:
+            formated_conditions.append({
+                'nome': condition[0],
+                'desc': condition[1]
+            })
+        return formated_conditions
 
     def get_ability_category_by_id (self, abilityCategoryId):
         return self.cursor.execute(f'SELECT category_name FROM abilities_categories WHERE rowid = {abilityCategoryId}').fetchall()[0][0]
@@ -161,6 +174,13 @@ class db_manager:
         self.cursor.execute(f'DELETE FROM {tableName} WHERE {columnName}={valueToDelete};')
         self.connection.commit()
 
+    def import_conditions(self):
+#        self.cursor.execute('DROP TABLE conditions')
+#        self.create_table('conditions','(condition_name, condition_description)')
+        df = pd.read_excel('./data/condicoes.ods', engine='odf')
+        for i in range(len(df['Nome'])):
+            self.insert_values('conditions',[f'("{df['Nome'][i]}","{df['Descrição'][i]}")'])
+
 # -------------------------------
 #db_manager().reset_all()
 #db_manager().create_character('Bob','Ave','Químico','20','0','0','5','1','20')
@@ -170,3 +190,4 @@ class db_manager:
 #print(db_manager().list_abilities_categories_by_character('Dracorina'))
 #db_manager().list_abilities_by_character('Dracorina')
 
+#db_manager().import_conditions()

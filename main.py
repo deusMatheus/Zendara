@@ -1,6 +1,6 @@
 #####################################################################################################################
 #                   Fichas de Zendara                   
-# Versão 0.4.9
+# Versão 0.5.0
 #
 # Atualmente:
 #
@@ -12,11 +12,11 @@
 #
 #   - Retiradas as colunas de equipamentos da tabela de personagenns.
 #
-#   - Permite editar atributos, HP, xp e velocidade de movimento dos personagens
+#   - Permite editar atributos, Defesa, HP, Xp, velocidade, itens e habilidades dos personagens
 #
 #   - Permite editar itens dos personagens
 #
-#   - Permite editar habilidades dos personagens (necessita de mais testes)
+#   - Permite adicionar condições na ficha. AINDA NÃO SALVA NO DB!
 #
 #   - Adicionados Encantamentos, Habilidades, Magias e Perspicácias como categorias de conhecimentos.
 #
@@ -24,8 +24,6 @@
 #       no personagem escolhido previamente.
 #
 # Para modificar: 
-#
-#   - Permitir adicionar condições na ficha
 #
 #   - Permitir inserir imagens dos personagens
 #
@@ -55,10 +53,6 @@
 #       Estava ocorrendo pois na hora de atualizar o DB a posição de Defesa e XP estavam trocados.
 #
 #####################################################################################################################
-# Tirar mundano e mágico e colocar mochila em Equipamento - [v]
-# Colocar Defesa junto com o atributos
-# Colocar as habilidades especiais de cada atributo como está no livro
-# Mudar de Peripécia para Perspicácia
 
 import streamlit as st
 #import tailwind as tw
@@ -73,7 +67,7 @@ st.set_page_config(layout="centered", initial_sidebar_state="collapsed")
 #    css = file.read()
 #st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
-st.session_state['version'] = 'V 0.4.9'
+st.session_state['version'] = 'V 0.5.0'
 
 if 'characters_list' not in st.session_state:
     st.session_state['characters_list'] = db().select_values("*",'character_sheets')
@@ -83,6 +77,9 @@ if 'abilities_categories_list' not in st.session_state:
 
 if 'abilities_list' not in st.session_state:
     st.session_state['abilities_list'] = db().select_values("*",'abilities')
+
+if 'conditions' not in st.session_state:
+    st.session_state['conditions'] = db().list_conditions()
 
 if 'register_ability' not in st.session_state:
     st.session_state['register_ability'] = False

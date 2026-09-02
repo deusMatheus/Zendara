@@ -149,6 +149,19 @@ else:
 #                st.write(f'{list_of_properties[j]}: {characters_list[character_index][j]}')
 #        skill_categories = characters_list[character_index][-1].split(",")
 
+        with st.container(border=True):
+            list_of_columns_conditions = st.columns(4)
+            for i in range(4):
+                list_of_columns_conditions[i].checkbox(f'{st.session_state['conditions'][i]['nome']}',help=st.session_state['conditions'][i]['desc'])
+            for i in range(4):
+                list_of_columns_conditions[i].checkbox(f'{st.session_state['conditions'][i+4]['nome']}',help=st.session_state['conditions'][i+4]['desc'])
+            for i in range(4):
+                list_of_columns_conditions[i].checkbox(f'{st.session_state['conditions'][i+8]['nome']}',help=st.session_state['conditions'][i+8]['desc'])
+            for i in range(4):
+                list_of_columns_conditions[i].checkbox(f'{st.session_state['conditions'][i+12]['nome']}',help=st.session_state['conditions'][i+12]['desc'])
+            for i in range(4):
+                list_of_columns_conditions[i].checkbox(f'{st.session_state['conditions'][i+16]['nome']}',help=st.session_state['conditions'][i+16]['desc'])
+
         st.title('Equipamentos')
 
         items_by_character = db().list_items_by_character(characters_list[character_index][0])
@@ -236,6 +249,7 @@ else:
                             st.divider()
                         elif list_of_tabs[i] != ability['categoria'] and not ability['categoria']:
                             st.write('Não há Conhecimento cadastrado nesta categoria.')
+
 
     else:
         st.write('Ocorreu um problema, contate o administrador do sistema')
