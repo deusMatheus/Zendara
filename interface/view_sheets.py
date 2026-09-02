@@ -4,9 +4,6 @@ import streamlit as st
 #import tailwind as tw
 from classes.db_manager import db_manager as db
 
-if 'i' not in st.session_state:
-    st.session_state['i'] = 0
-
 #input_number_pixels = 135
 
 if 'characters_list' in st.session_state:
@@ -113,7 +110,6 @@ else:
             list_of_columns_atributes[3].write(f'+**{floor(int(characters_list[character_index][9])/2)}** contrato com espírito')
         else:
             list_of_columns_atributes[3].write(f'+**0** contrato com espírito')
-           
 
         if(int(st.session_state[f'xp_score_{characters_list[character_index][0]}']) != int(characters_list[character_index][3]) or
            int(st.session_state[f'hp_score_{characters_list[character_index][0]}']) != int(characters_list[character_index][5]) or
@@ -124,8 +120,6 @@ else:
            int(st.session_state[f'mov_score_{characters_list[character_index][0]}']) != int(characters_list[character_index][10]) or
            int(st.session_state[f'def_score_{characters_list[character_index][0]}']) != int(characters_list[character_index][11])):
             st.session_state['disabled_button'] = False
-            print(f'hey got here {st.session_state['i']}')
-            st.session_state['i'] += 1
 
         else:
             st.session_state['disabled_button'] = True
@@ -141,8 +135,8 @@ else:
                                                 st.session_state[f'lgc_score_{characters_list[character_index][0]}'],
                                                 st.session_state[f'spr_score_{characters_list[character_index][0]}'],
                                                 st.session_state[f'mov_score_{characters_list[character_index][0]}'],
-                                                st.session_state[f'def_score_{characters_list[character_index][0]}'],
-                                                st.session_state[f'xp_score_{characters_list[character_index][0]}'])
+                                                st.session_state[f'xp_score_{characters_list[character_index][0]}'],
+                                                st.session_state[f'def_score_{characters_list[character_index][0]}'])
                 st.warning('Atualizando ficha. Aguarde...')
                 sleep(3)
             except:

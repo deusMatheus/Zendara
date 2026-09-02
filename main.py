@@ -1,6 +1,6 @@
 #####################################################################################################################
 #                   Fichas de Zendara                   
-# Versão 0.4.8
+# Versão 0.4.9
 #
 # Atualmente:
 #
@@ -43,13 +43,16 @@
 #   
 # Bugs conhecidos: 
 #
-#   - Ao realizar alguma alteração nos atributos da ficha, o botão Aplicar Mudanças fica sempre ativado
+#   - Não há bugs conhecidos no momento.
 #
 # Bugs resolvidos: 
 #
 #   - Ao selecionar visualizador de fichas (view_sheets.py), estava dobrando a quantidade de fichas na variavel
 #       characters_list sempre que a página era acessada. Pegar esses dados do db foi colocado em main.py,
 #       o que chama apenas uma única vez e é armazenado em st.session.
+#
+#   - Ao realizar alguma alteração nos atributos da ficha, o botão Aplicar Mudanças ficava sempre ativado.
+#       Estava ocorrendo pois na hora de atualizar o DB a posição de Defesa e XP estavam trocados.
 #
 #####################################################################################################################
 # Tirar mundano e mágico e colocar mochila em Equipamento - [v]
@@ -70,7 +73,7 @@ st.set_page_config(layout="centered", initial_sidebar_state="collapsed")
 #    css = file.read()
 #st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
-st.session_state['version'] = 'V 0.4.8'
+st.session_state['version'] = 'V 0.4.9'
 
 if 'characters_list' not in st.session_state:
     st.session_state['characters_list'] = db().select_values("*",'character_sheets')
