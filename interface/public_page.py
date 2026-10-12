@@ -5,8 +5,9 @@ st.session_state['edit_ability'] = False
 st.session_state['register_item'] = False
 st.session_state['edit_item'] = False
 
+st.image(st.session_state['image_path'],width=500)
 
-st.title(f"Fichas de Zendara {st.session_state['version']}")
+#st.title(f"Fichas de Zendara {st.session_state['version']}")
 st.write('O que deseja?')
 
 st.session_state['selected_character'] = False

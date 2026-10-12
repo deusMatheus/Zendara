@@ -1,11 +1,23 @@
 import sqlite3
 import pandas as pd
+import os
 
 class db_manager:
 
     def __init__(self):
         self.connection = sqlite3.connect('./data/db.db')
         self.cursor = self.connection.cursor()
+        self.home_dir = os.path.expanduser('~')
+        self.app_dir = '.zendara'
+        self.full_app_dir = os.path.join(self.home_dir, self.app_dir)
+
+    def create_app_dir(self):
+        if not os.path.exists(self.full_app_dir):
+            os.makedirs(self.full_app_dir)
+            print(f'Creating folder at "{self.full_app_dir}"')
+            return True
+        print(f'Folder already exists at {self.full_app_dir}')
+        return False
 
     def get_columns_table(self, tableName):
         return self.cursor.execute(f'PRAGMA table_info({tableName})')
@@ -191,3 +203,5 @@ class db_manager:
 #db_manager().list_abilities_by_character('Dracorina')
 
 #db_manager().import_conditions()
+
+db_manager().create_app_dir()

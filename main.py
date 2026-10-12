@@ -39,6 +39,8 @@
 #
 #   - Limpar código comentado
 #   
+#   - Colocar a possibilidade de abrir mais de uma ficha ao mesmo tempo
+#   
 # Bugs conhecidos: 
 #
 #   - Não há bugs conhecidos no momento.
@@ -53,6 +55,23 @@
 #       Estava ocorrendo pois na hora de atualizar o DB a posição de Defesa e XP estavam trocados.
 #
 #####################################################################################################################
+# Dentro das vocações, colocar o título como um select_box, ao selecionar mostra um texto com visibility = hidden inicialmente
+# Colocar campo para lore na Vocação e Espécie, aba para Social e Imagem
+# Editar nome do personagem 
+# Barth e Kay informaram que não estão conseguindo salvar as fichas
+# Barth - Chumbo Grosso - Caçador de monstruosidade - Especie Carnivoro
+# Kay - atirador de elite
+#onívoro
+#dadivas - Audição aguçada e Reflexo muscular
+#força - 2
+#agilidade - 2
+#espiritualidade - 1
+#raciocínio - 1
+#11 de defesa
+#9 de movimento
+#equipamentos do conjunto de militar - arco e adaga como arma
+#habilidades - camuflagem, fluxo de adrenalina, sexto olho Ego
+#Magias - Fechar ferimentos
 
 import streamlit as st
 #import tailwind as tw
@@ -68,6 +87,9 @@ st.set_page_config(layout="centered", initial_sidebar_state="collapsed")
 #st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
 st.session_state['version'] = 'V 0.5.0'
+
+if 'image_path' not in st.session_state:
+    st.session_state['image_path'] = './data/logo_zendara_transp.png'
 
 if 'characters_list' not in st.session_state:
     st.session_state['characters_list'] = db().select_values("*",'character_sheets')
