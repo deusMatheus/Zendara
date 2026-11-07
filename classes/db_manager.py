@@ -5,19 +5,48 @@ import os
 class db_manager:
 
     def __init__(self):
-        self.connection = sqlite3.connect('./data/db.db')
-        self.cursor = self.connection.cursor()
         self.home_dir = os.path.expanduser('~')
         self.app_dir = '.zendara'
         self.full_app_dir = os.path.join(self.home_dir, self.app_dir)
+        self.database_name = 'db.db'
+        self.full_database_path = os.path.join(self.full_app_dir, self.database_name)
+        if (not self.test_app_dir()):
+            self.create_app_dir()
+#            self.create_database()
+            self.connection = sqlite3.connect(self.full_database_path)
+            self.cursor = self.connection.cursor()
+            self.create_all_tables()
+        else:
+            self.connection = sqlite3.connect(self.full_database_path)
+            self.cursor = self.connection.cursor()                        
+
+## TESTAR ISSO AQUI NA VERSÃO PARA WINDOWS! 
+
+    def test_app_dir(self):
+        if os.path.exists(self.full_app_dir):
+            return True
+        return False
 
     def create_app_dir(self):
-        if not os.path.exists(self.full_app_dir):
-            os.makedirs(self.full_app_dir)
-            print(f'Creating folder at "{self.full_app_dir}"')
+        os.makedirs(self.full_app_dir)
+        f = open(self.full_database_path, 'x')
+        f.close()
+        print(f'Creating folder at "{self.full_app_dir}"')
+        print(f"Creating database at {self.full_database_path}")
+        return True
+#        print(f'Folder already exists at {self.full_app_dir}')
+#        return False
+
+    def create_database(self):
+        if not os.path.isfile(self.full_database_path):
+            f = open(self.full_database_path, 'x')
+            f.close()
+            print(f"Creating database at {self.full_database_path}")
+
             return True
-        print(f'Folder already exists at {self.full_app_dir}')
+        print(f"Database exists at {self.full_database_path}")
         return False
+            
 
     def get_columns_table(self, tableName):
         return self.cursor.execute(f'PRAGMA table_info({tableName})')
@@ -31,7 +60,7 @@ class db_manager:
             self.cursor.execute(f"""INSERT INTO {table_name} VALUES {value_string}""")
         self.connection.commit()
 
-    def delete_tables(self):
+    def delete_all_tables(self):
         self.cursor.execute('DROP TABLE users')
         self.cursor.execute('DROP TABLE character_sheets')
         self.cursor.execute('DROP TABLE abilities_categories')
@@ -40,14 +69,7 @@ class db_manager:
         self.cursor.execute('DROP TABLE conditions')
         self.connection.commit()
 
-    def select_values(self, columns_string, table_name):
-        return self.cursor.execute(f'SELECT {columns_string} FROM {table_name}').fetchall()
-
-    def select_values_where(self, columns_string, column_where, table_name, value_where):
-        return self.cursor.execute(f'SELECT {columns_string} FROM {table_name} WHERE {column_where} = {value_where};').fetchall()
-
-    def reset_all(self):
-        self.delete_tables()
+    def create_all_tables(self):
         self.create_table('users','(username, password, name, privilege)')
         self.create_table('character_sheets','(character_name, character_species, character_job, character_xp, max_hp, current_hp, strength_score, agility_score, logic_score, spirituality_score, movement_speed, defense_score, list_of_conditions)')
         self.create_table('abilities_categories',('(character_id, category_name)'))
@@ -55,6 +77,16 @@ class db_manager:
         self.create_table('equipement','(character_id, equip_category, equip_name, equip_description)')
         self.create_table('conditions','(condition_name, condition_description)')
         self.import_conditions()
+
+    def select_values(self, columns_string, table_name):
+        return self.cursor.execute(f'SELECT {columns_string} FROM {table_name}').fetchall()
+
+    def select_values_where(self, columns_string, column_where, table_name, value_where):
+        return self.cursor.execute(f'SELECT {columns_string} FROM {table_name} WHERE {column_where} = {value_where};').fetchall()
+
+    def reset_all(self):
+        self.delete_all_tables()
+        self.create_all_tables()
 
     def list_abilities_categories_by_character(self, characterName):
         character_id = self.cursor.execute(f'SELECT rowid FROM character_sheets WHERE character_name = "{characterName}"').fetchall()[0][0]
@@ -189,9 +221,12 @@ class db_manager:
     def import_conditions(self):
 #        self.cursor.execute('DROP TABLE conditions')
 #        self.create_table('conditions','(condition_name, condition_description)')
-        df = pd.read_excel('./data/condicoes.ods', engine='odf')
+#        df = pd.read_excel('./data/condicoes.ods', engine='odf')
+        df = pd.read_csv('./data/condicoes.csv')
         for i in range(len(df['Nome'])):
             self.insert_values('conditions',[f'("{df['Nome'][i]}","{df['Descrição'][i]}")'])
+#            print(f"{df['Nome'][i]}")
+#            print(f"{df['Descrição'][i]}")
 
 # -------------------------------
 #db_manager().reset_all()
@@ -203,5 +238,5 @@ class db_manager:
 #db_manager().list_abilities_by_character('Dracorina')
 
 #db_manager().import_conditions()
-
-db_manager().create_app_dir()
+#db_manager().import_conditions()
+#db_manager().reset_all()

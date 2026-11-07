@@ -5,4 +5,5 @@ dist/
 package.json
 package-lock.json
 package copy.json
+package copy 2.json
 comandos_para_buildar_em_exe.txt

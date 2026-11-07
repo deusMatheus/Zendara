@@ -1,4 +1,5 @@
 import streamlit as st
+from classes.db_manager import db_manager as db
 
 st.session_state['register_ability'] = False
 st.session_state['edit_ability'] = False
@@ -12,6 +13,8 @@ st.write('O que deseja?')
 
 st.session_state['selected_character'] = False
 st.session_state['character_index'] = None
+
+#st.write(db().full_database_path)
 
 columns = st.columns(2)
 

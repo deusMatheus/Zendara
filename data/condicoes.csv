@@ -1,0 +1,21 @@
+Nome,Descrição
+Alcance curto,até 9 metros de distância
+Alcance médio,até 16 metros
+Alcance Longo,até 30 metros
+Atordoado,"Um personagem atordoado só poderá realizar 1 ação no seu turno (ele precisa escolher se vai realizar a ação principal, bônus ou a de movimento) ele deixa de estar atordoado no final do seu turno."
+Caçar,Você  está  caçando  um  alvo  ou  está  sendo  caçado  quando  é  alvo  de ataques do mesmo personagem por duas ou mais rodadas consecutivas. Você deixa de caçar ou estar sendo caçado quando não ataca o mesmo alvo. 
+Contido,uma criatura que está contida tem sua movimentação reduzida a 0 e não pode realizar ações de movimento
+Derrubado,"uma criatura que esteja derrubada não pode realizar ações bônus, tem desvantagem em ataques corpo a corpo e sofre vantagem ao ser atacada. Além disso precisará usar uma ação de movimento para se levantar. Caso a criatura derrubada esteja no ar, será aplicado dano de colisão"
+Empurrado,"Uma  criatura  que  foi  empurrada  teve  seu movimento forçado para alguma direção. Quando uma criatura empurrada se choca com outra criatura ou objeto ela leva dano de colisão. O dano de colisão é igual a 1 ponto para cada 1,5m (um quadrado) que a criatura foi empurrada. Se a colisão for entre 2 criaturas, o dano será dividido arredondado para baixo."
+Envenenado,"Uma  criatura envenenada recebe dano diretamente na sua  vida  e  perde  1,5m  de  velocidade  de  movimento  igual  a  cada  ponto  de acúmulo de veneno no começo do seu turno. Ao terminar o turno, ela perde 1 ponto de acúmulo de veneno"
+Executado,"Ao  utilizar  uma  ação,  você  pode  executar  um  personagem inconsciente. O personagem que foi executado morre"
+Imbuído,"O  objeto  está  com  um  tipo  específico  (descrito  no  conhecimento) para fins de dano, interpretação ou interação com outros conhecimentos"
+Inconsciente,O  personagem  está  com  0  pontos  de  vida  a  ponto  de  ser executado e não pode realizar nenhuma ação. Não consegue utilizar nenhum dos 5 sentidos e só sairá dessa condição após ser reanimado
+Medo,Um personagem com medo evita atacar a origem do medo a menos que seja o único inimigo visível
+Reanimado,Um personagem pode ser reanimado em um descanso. Também  pode  ser  reanimado  com  um  efeito  de  magia  ou  habilidade.  Um personagem reanimado dentro de combate começa seu turno atordoado
+Roubo de Vida,"Cura seus pontos de vida igual a metade do dano total causado, arredondado para cima."
+Sangrando,"Quando a vida de um personagem estiver na metade do valor total ou menos arredondado para baixo, ele estará com a condição sangrando. Uma criatura sangrando tem sua velocidade de movimento reduzida pela metade."
+Surpreso,Uma criatura surpreendida é atacada com vantagem. Ela deixa de estar surpresa no final do seu turno.
+Suspenso,"Um personagem que esteja suspenso no ar e não tenha capacidade de voar estará com a condição suspenso no começo do seu turno. Personagens com a condição suspenso não podem realizar ações bônus e cairão no final do seu  turno  recebendo  1  ponto  de  dano  para cada 1,5 metros percorridos até atingir o solo e deixará de estar com a condição suspenso"
+Possuído,"Quando  um  personagem possui outro personagem ou criatura, ele toma o controle do corpo e realiza as ações por aquela criatura até o começo do  seu  próximo  turno  ou  durante  10  minutos  fora  de combate. O Possessor recebe  metade  de  todo  o  dano  recebido  pelo  personagem  possuído diretamente em sua vida enquanto o efeito estiver ativo."
+Provocado,Uma criatura provocada deve priorizar o ataque para a origem da provocação sempre que possível
